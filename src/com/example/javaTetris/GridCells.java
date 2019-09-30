@@ -1,4 +1,26 @@
 package com.example.javaTetris;
 
-public class GridCells  {
+import javax.swing.*;
+import java.awt.*;
+import java.awt.geom.Rectangle2D;
+
+public class GridCells extends JComponent {
+    Rectangle2D[][] grid = new Rectangle2D[10][20];
+    @Override
+    public void paintComponent(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g;
+        //int x = 10;
+        //int y = 20;
+        for (int y = 0; y < 600;) {
+            for (int x = 0; x < 300;) {
+                Rectangle2D rect = new Rectangle(x,y,30,30);
+                g2.setColor(Color.CYAN);
+                g2.fill(rect);
+                grid[x/30][y/30]=rect;
+
+                x+=30;
+            }
+            y+=30;
+        }
+    }
 }

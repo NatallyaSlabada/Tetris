@@ -8,10 +8,14 @@ public class Tetris {
         //Game game = new Game();
         JFrame window;
         window = new JFrame();
-        window.setSize(600,800);
+        window.setSize(315,637);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setTitle("Tetris");
         window.getContentPane().setBackground(Color.CYAN);
+        //JPanel panel = new JPanel();
+        //window.add(panel);
+        JComponent cell = new GridCells();
+        window.add(cell);
         window.setVisible(true);
     }
 }
