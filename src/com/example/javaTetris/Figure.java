@@ -1,10 +1,11 @@
 package com.example.javaTetris;
 
 import java.awt.*;
+import java.util.Random;
 
 public class Figure {
     //Rectangle rectangle = new Rectangle(30,30);
-    public static int[][][] figereSamples = {
+    int[][][] figureSamples = {
             {
                     {1,1,1,1}, // XXXX
                     {0,0,0,0},
@@ -48,7 +49,8 @@ public class Figure {
                     {0,0,0,0}
             }
     };
-    public static int[][] getNewFigure (){
-        return figereSamples[(int)Math.random()];
+    public Random random = new Random();
+    public int[][] getNewFigure (){
+        return figureSamples[random.nextInt(7)];
     }
 }
