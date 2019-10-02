@@ -9,18 +9,16 @@ public class Tetris {
         Game game = new Game();
         game.setWindow();
         game.setFigureOnField();
-        try {
-            Thread.sleep(1000);
+
+        for (int x=0; x<19; x++){
+            try {
+                Thread.sleep(500);
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+            game.step(x+1);
+            game.window.repaint();
         }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-
-
-        game.step(2);
-
-
-        game.window.repaint();
-
     }
 }

@@ -25,11 +25,11 @@ public class Game {
     }
 
     public void step(int p) {
-        /*for (int y = 0; y < 20;) {
-            for (int x = 0; x < 10;) {
+        for (int y = 0; y < 20; y++) {
+            for (int x = 0; x < 10; x++) {
                 GridCells.gridStatus[x][y] = 0;
             }
-        }*/
+        }
         int z = p;
         for (int y = 0; y < 4; y++) {
             for (int x = 0; x < 4; x++) {
