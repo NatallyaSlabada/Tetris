@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Game {
-    public Game (){
+    public Game() {
         figure = new Figure();
     }
 
@@ -13,23 +13,40 @@ public class Game {
     Figure figure;
     int[][] currentFigure;
 
-    public void step (){
-        for (int y=0; y<4; y++){
-            for (int x=0; x<4; x++){
-                if (this.currentFigure[y][x]==1){
-                    GridCells.gridStatus[x][y]=1;
+    public void setFigureOnField() {
+        currentFigure = getNewFigure();
+        for (int y = 0; y < 4; y++) {
+            for (int x = 0; x < 4; x++) {
+                if (this.currentFigure[y][x] == 1) {
+                    GridCells.gridStatus[x + 3][y] = 1;
                 }
             }
         }
     }
 
-    public int[][] getNewFigure(){
+    public void step(int p) {
+        /*for (int y = 0; y < 20;) {
+            for (int x = 0; x < 10;) {
+                GridCells.gridStatus[x][y] = 0;
+            }
+        }*/
+        int z = p;
+        for (int y = 0; y < 4; y++) {
+            for (int x = 0; x < 4; x++) {
+                if (this.currentFigure[y][x] == 1) {
+                    GridCells.gridStatus[x + 3][y + z] = 1;
+                }
+            }
+        }
+    }
+
+    public int[][] getNewFigure() {
         return figure.getNewFigure();
     }
 
-    public void setWindow (){
+    public void setWindow() {
         this.window = new JFrame();
-        this.window.setSize(315,637);
+        this.window.setSize(315, 637);
         this.window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.window.setTitle("Tetris");
         this.window.getContentPane().setBackground(Color.CYAN);
