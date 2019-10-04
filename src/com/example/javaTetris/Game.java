@@ -11,6 +11,9 @@ public class Game {
     JFrame window;
     JComponent grid;
     Figure figure;
+    int figureX = 3;
+    int figureY = 0;
+    boolean isLanded = false;
     int[][] currentFigure;
 
     public void setFigureOnField() {
@@ -18,25 +21,26 @@ public class Game {
         for (int y = 0; y < 4; y++) {
             for (int x = 0; x < 4; x++) {
                 if (this.currentFigure[y][x] == 1) {
-                    GridCells.gridStatus[x + 3][y] = 1;
+                    GridCells.gridStatus[x + this.figureX][y + this.figureY] = 1;
                 }
             }
         }
     }
 
-    public void step(int p) {
+    public void step(int figureX, int figureY) {
         for (int y = 0; y < 20; y++) {
             for (int x = 0; x < 10; x++) {
                 GridCells.gridStatus[x][y] = 0;
             }
         }
-        int z = p;
-        for (int y = 0; y < 4; y++) {
-            for (int x = 0; x < 4; x++) {
-                if (this.currentFigure[y][x] == 1) {
-                    GridCells.gridStatus[x + 3][y + z] = 1;
+        for (int y = 0; y < 2; y++) {
+
+                for (int x = 0; x < 4; x++) {
+                    if (this.currentFigure[y][x] == 1) {
+                        GridCells.gridStatus[x + figureX][y + figureY] = 1;
+                    }
                 }
-            }
+            if ((y + figureY + 1)>20) isLanded = true;
         }
     }
 

@@ -9,6 +9,8 @@ public class GridCells extends JComponent {
     public static int[][] gridStatus = new int[10][20];
     @Override
     public void paintComponent(Graphics g) {
+        System.out.println(SwingUtilities.isEventDispatchThread());
+
         Graphics2D g2 = (Graphics2D) g;
         //int x = 10;
         //int y = 20;
