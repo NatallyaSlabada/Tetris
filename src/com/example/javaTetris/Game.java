@@ -5,15 +5,13 @@ import java.awt.*;
 
 public class Game {
     public Game() {
-        figure = new Figure();
+
     }
 
     JFrame window;
     JComponent grid;
     Figure figure;
-    int figureX = 3;
-    int figureY = 0;
-    boolean isLanded = false;
+
     int[][] currentFigure;
 
     public void setFigureOnField() {
@@ -21,7 +19,7 @@ public class Game {
         for (int y = 0; y < 4; y++) {
             for (int x = 0; x < 4; x++) {
                 if (this.currentFigure[y][x] == 1) {
-                    GridCells.gridStatus[x + this.figureX][y + this.figureY] = 1;
+                    GridCells.gridMovement[x + figure.figureX][y + figure.figureY] = 1;
                 }
             }
         }
@@ -30,21 +28,39 @@ public class Game {
     public void step(int figureX, int figureY) {
         for (int y = 0; y < 20; y++) {
             for (int x = 0; x < 10; x++) {
-                GridCells.gridStatus[x][y] = 0;
+                GridCells.gridMovement[x][y] = 0;
             }
         }
-        for (int y = 0; y < 2; y++) {
 
+        for (int y = 1; y > -1; y--) {
                 for (int x = 0; x < 4; x++) {
                     if (this.currentFigure[y][x] == 1) {
-                        GridCells.gridStatus[x + figureX][y + figureY] = 1;
+                        if(GridCells.gridStable[x + figureX][y + figureY]!=1){
+                            GridCells.gridMovement[x + figureX][y + figureY] = 1;
+                        }
+                        else {
+                            figure.isMovementPossible = false;
+                        }
                     }
                 }
-            if ((y + figureY + 1)>20) isLanded = true;
+            if ((y + figureY )==19){
+                figure.isLanded = true;
+            }
+        }
+    }
+
+    public void toStableGrid (int figureX, int figureY){
+        for (int y = 1; y > -1; y--) {
+            for (int x = 0; x < 4; x++) {
+                if (this.currentFigure[y][x] == 1) {
+                    GridCells.gridStable[x + figureX][y + figureY] = 1;
+                }
+            }
         }
     }
 
     public int[][] getNewFigure() {
+        figure = new Figure();
         return figure.getNewFigure();
     }
 

@@ -5,6 +5,10 @@ import java.util.Random;
 
 public class Figure {
     //Rectangle rectangle = new Rectangle(30,30);
+    int figureX = 3;
+    int figureY = 0;
+    boolean isLanded = false;
+    boolean isMovementPossible = true;
     int[][][] figureSamples = {
             {
                     {1,1,1,1}, // XXXX

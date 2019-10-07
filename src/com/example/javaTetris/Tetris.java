@@ -16,18 +16,30 @@ public class Tetris {
 
         Game game = new Game();
         game.setWindow();
-        game.setFigureOnField();
 
-        while (!game.isLanded){
-            try {
-                Thread.sleep(500);
-            } catch (Exception e) {
-                e.printStackTrace();
+
+        while (!isGameOver){
+            game.setFigureOnField();
+            while (!game.figure.isLanded){
+                try {
+                    Thread.sleep(500);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                game.figure.figureY++;
+                game.step(game.figure.figureX, game.figure.figureY);
+                if (!game.figure.isMovementPossible){
+                    game.figure.figureY--;
+                    game.step(game.figure.figureX, game.figure.figureY);
+                    game.figure.isLanded = true;
+                }
+                if (game.figure.isLanded){
+                    game.toStableGrid(game.figure.figureX, game.figure.figureY);
+                }
+                game.window.repaint();
             }
-            game.figureY++;
-            game.step(game.figureX, game.figureY);
-            game.window.repaint();
         }
+
 
 
     }
