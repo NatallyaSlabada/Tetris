@@ -18,33 +18,41 @@ public class FigureAction implements KeyListener {
         int keyCode = e.getKeyCode();
         switch (keyCode) {
             case (KeyEvent.VK_RIGHT): {
-                game.figure.figureX+=1;
-                if (game.figure.figureX<=6){
-                    game.step(game.figure.figureX, game.figure.figureY, game.figure);
-                    if (!game.figure.isLeftRightMovementPossible){
-                        game.figure.figureX--;
-                        game.step(game.figure.figureX, game.figure.figureY, game.figure);
-                    }
-                    game.window.repaint();
-                }
-                else game.figure.figureX-=1;
+                move(Move.RIGHT);
                 break;
             }
             case (KeyEvent.VK_LEFT): {
-                game.figure.figureX-=1;
-                if (game.figure.figureX>=0){
-                    game.step(game.figure.figureX, game.figure.figureY, game.figure);
-                    if (!game.figure.isLeftRightMovementPossible){
-                        game.figure.figureX++;
-                        game.step(game.figure.figureX, game.figure.figureY, game.figure);
-                    }
-                    game.window.repaint();
-                }
-                else game.figure.figureX+=1;
+                move(Move.LEFT);
                 break;
             }
         }
-
+        game.figure.isLeftRightMovementPossible=true;
+    }
+    protected void move (Move moveDirection){
+        if (moveDirection==Move.LEFT){
+            game.figure.figureX--;
+            if (game.figure.figureX>=0){
+                game.step(game.figure.figureX, game.figure.figureY, Move.LEFT);
+                if (!game.figure.isLeftRightMovementPossible){
+                    game.figure.figureX++;
+                    game.step(game.figure.figureX, game.figure.figureY, Move.LEFT);
+                }
+                game.window.repaint();
+            }
+            else game.figure.figureX++;
+        }
+        else if (moveDirection==Move.RIGHT){
+            game.figure.figureX++;
+            if (game.figure.figureX<=6){
+                game.step(game.figure.figureX, game.figure.figureY, Move.RIGHT);
+                if (!game.figure.isLeftRightMovementPossible){
+                    game.figure.figureX--;
+                    game.step(game.figure.figureX, game.figure.figureY, Move.RIGHT);
+                }
+                game.window.repaint();
+            }
+            else game.figure.figureX--;
+        }
     }
 
     @Override

@@ -27,10 +27,10 @@ public class Tetris {
                     e.printStackTrace();
                 }
                 game.figure.figureY++;
-                game.step(game.figure.figureX, game.figure.figureY, game.figure);
+                game.step(game.figure.figureX, game.figure.figureY, Move.DOWN);
                 if (!game.figure.isDownMovementPossible){
                     game.figure.figureY--;
-                    game.step(game.figure.figureX, game.figure.figureY, game.figure);
+                    game.step(game.figure.figureX, game.figure.figureY, Move.DOWN);
                     game.figure.isLanded = true;
                 }
                 if (game.figure.isLanded){
