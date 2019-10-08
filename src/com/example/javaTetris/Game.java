@@ -11,6 +11,7 @@ public class Game {
     JFrame window;
     JComponent grid;
     Figure figure;
+    FigureAction figureAction = new FigureAction(this);
 
     int[][] currentFigure;
 
@@ -25,7 +26,10 @@ public class Game {
         }
     }
 
-    public void step(int figureX, int figureY) {
+    public void step(int figureX, int figureY, Figure figure) {
+        System.out.println("step thread "+ Thread.currentThread().getName());
+        System.out.println("step beginning, value of DownMove: "+ this.figure.isDownMovementPossible);
+        System.out.println("step beginning, value of LeftRightMove: "+ this.figure.isLeftRightMovementPossible);
         for (int y = 0; y < 20; y++) {
             for (int x = 0; x < 10; x++) {
                 GridCells.gridMovement[x][y] = 0;
@@ -39,7 +43,9 @@ public class Game {
                             GridCells.gridMovement[x + figureX][y + figureY] = 1;
                         }
                         else {
-                            figure.isMovementPossible = false;
+                            figure.isDownMovementPossible = false;
+                            System.out.println("value of movementDirection that we change, expected DownMove: "+ this.figure.isDownMovementPossible);
+                            System.out.println("value of movementDirection that we change, expected LeftRightMove: "+ this.figure.isLeftRightMovementPossible);
                         }
                     }
                 }
@@ -71,6 +77,8 @@ public class Game {
         this.window.setTitle("Tetris");
         this.window.getContentPane().setBackground(Color.CYAN);
         this.grid = new GridCells();
+        grid.addKeyListener(figureAction);
+        grid.setFocusable(true);
         this.window.add(grid);
         this.window.setVisible(true);
     }

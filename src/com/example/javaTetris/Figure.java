@@ -8,7 +8,8 @@ public class Figure {
     int figureX = 3;
     int figureY = 0;
     boolean isLanded = false;
-    boolean isMovementPossible = true;
+    boolean isDownMovementPossible = true;
+    boolean isLeftRightMovementPossible = true;
     int[][][] figureSamples = {
             {
                     {1,1,1,1}, // XXXX
