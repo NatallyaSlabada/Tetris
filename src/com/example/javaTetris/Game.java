@@ -13,6 +13,7 @@ public class Game {
     Figure figure;
     FigureAction figureAction = new FigureAction(this);
 
+
     int[][] currentFigure;
 
     public void setFigureOnField() {
@@ -33,24 +34,27 @@ public class Game {
             }
         }
 
-        for (int y = 1; y > -1; y--) {
-                for (int x = 0; x < 4; x++) {
-                    if (this.currentFigure[y][x] == 1) {
-                        if(GridCells.gridStable[x + figureX][y + figureY]!=1){
-                            GridCells.gridMovement[x + figureX][y + figureY] = 1;
+        for (int y = 0; y < 4; y++) {
+            for (int x = 0; x < 4; x++) {
+                if (this.currentFigure[y][x] == 1) {
+                    if(GridCells.gridStable[x + figureX][y + figureY]!=1){
+                        GridCells.gridMovement[x + figureX][y + figureY] = 1;
+                    }
+                    else {
+                        if (moveDirection==Move.DOWN){
+                            figure.isDownMovementPossible = false;
                         }
-                        else {
-                            if (moveDirection==Move.DOWN){
-                                figure.isDownMovementPossible = false;
-                            }
-                            else if (moveDirection==Move.LEFT || moveDirection==Move.RIGHT){
-                                figure.isLeftRightMovementPossible = false;
-                            }
+                        else if (moveDirection==Move.LEFT || moveDirection==Move.RIGHT){
+                            figure.isLeftRightMovementPossible = false;
                         }
                     }
                 }
-            if ((y + figureY )==19){
-                figure.isLanded = true;
+                if ((this.currentFigure[y][x]+GridCells.gridStable[x + figureX][y + figureY])==3){
+                    if (moveDirection==Move.DOWN){
+                        figure.isReachedBottomBorder = true;
+                        System.out.println("isReachedBottomBorder "+figure.isReachedBottomBorder );
+                    }
+                }
             }
         }
     }

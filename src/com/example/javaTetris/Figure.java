@@ -10,6 +10,7 @@ public class Figure {
     boolean isLanded = false;
     boolean isDownMovementPossible = true;
     boolean isLeftRightMovementPossible = true;
+    boolean isReachedBottomBorder = false;
     int[][][] figureSamples = {
             {
                     {1,1,1,1}, // XXXX

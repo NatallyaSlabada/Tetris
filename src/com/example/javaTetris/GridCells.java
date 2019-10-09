@@ -5,9 +5,19 @@ import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
 public class GridCells extends JComponent {
+    public GridCells () {
+        for (int x=0; x<10; x++){
+            gridStable[x][19]=2;
+        }
+        for (int y=0; y<20; y++){
+            gridStable[0][y]=3;
+            gridStable[9][y]=3;
+        }
+    }
     //Rectangle2D[][] grid = new Rectangle2D[10][20];
     public static int[][] gridMovement = new int[10][20];
-    public static int[][] gridStable = new int[10][20];
+    public static int[][] gridStable = new int[10][23];
+
     @Override
     public void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;

@@ -29,13 +29,15 @@ public class Tetris {
                 }
                 game.figure.figureY++;
                 game.step(game.figure.figureX, game.figure.figureY, Move.DOWN);
+                if (game.figure.isReachedBottomBorder){
+                    game.figure.isLanded = true;
+                }
                 if (!game.figure.isDownMovementPossible){
                     game.figure.figureY--;
                     game.step(game.figure.figureX, game.figure.figureY, Move.DOWN);
                     game.figure.isLanded = true;
                 }
                 if (game.figure.isLanded){
-                    game.speed = 500;
                     game.toStableGrid(game.figure.figureX, game.figure.figureY);
                 }
                 game.window.repaint();
