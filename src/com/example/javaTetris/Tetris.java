@@ -16,13 +16,14 @@ public class Tetris {
 
         Game game = new Game();
         game.setWindow();
+        game.speed = 500;
 
 
         while (!isGameOver){
             game.setFigureOnField();
             while (!game.figure.isLanded){
                 try {
-                    Thread.sleep(500);
+                    Thread.sleep(game.speed);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -34,6 +35,7 @@ public class Tetris {
                     game.figure.isLanded = true;
                 }
                 if (game.figure.isLanded){
+                    game.speed = 500;
                     game.toStableGrid(game.figure.figureX, game.figure.figureY);
                 }
                 game.window.repaint();

@@ -25,6 +25,10 @@ public class FigureAction implements KeyListener {
                 move(Move.LEFT);
                 break;
             }
+            case (KeyEvent.VK_DOWN): {
+                game.speed = 100;
+                break;
+            }
         }
         game.figure.isLeftRightMovementPossible=true;
     }
@@ -62,6 +66,9 @@ public class FigureAction implements KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
-
+        int keyCode = e.getKeyCode();
+        if (keyCode==KeyEvent.VK_DOWN){
+            game.speed = 500;
+        }
     }
 }

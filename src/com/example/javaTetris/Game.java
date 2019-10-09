@@ -7,7 +7,7 @@ public class Game {
     public Game() {
 
     }
-
+    int speed;
     JFrame window;
     JComponent grid;
     Figure figure;
