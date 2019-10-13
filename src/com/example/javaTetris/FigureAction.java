@@ -26,16 +26,22 @@ public class FigureAction implements KeyListener {
                 break;
             }
             case (KeyEvent.VK_DOWN): {
-                game.speed = 100;
+                game.speed = 70;
+                break;
+            }
+            case (KeyEvent.VK_UP): {
+                move(Move.ROTATION);
                 break;
             }
         }
         game.figure.isLeftRightMovementPossible=true;
+        game.figure.isRotationPossible=true;
     }
     protected void move (Move moveDirection){
         if (moveDirection==Move.LEFT){
             game.figure.figureX--;
             if (game.figure.figureX>=0){
+                game.figure.isReachedRightBorder = false;
                 game.step(game.figure.figureX, game.figure.figureY, Move.LEFT);
                 if (!game.figure.isLeftRightMovementPossible){
                     game.figure.figureX++;
@@ -47,7 +53,7 @@ public class FigureAction implements KeyListener {
         }
         else if (moveDirection==Move.RIGHT){
             game.figure.figureX++;
-            if (game.figure.figureX<=6){
+            if (!game.figure.isReachedRightBorder){
                 game.step(game.figure.figureX, game.figure.figureY, Move.RIGHT);
                 if (!game.figure.isLeftRightMovementPossible){
                     game.figure.figureX--;
@@ -56,6 +62,28 @@ public class FigureAction implements KeyListener {
                 game.window.repaint();
             }
             else game.figure.figureX--;
+        }
+        else if (moveDirection==Move.ROTATION){
+            game.bufferFigure = game.currentFigure;
+            game.figure.rotationNumber++;
+            if (game.figure.rotationNumber<game.figure.numberOfPossibleRotations){
+                game.currentFigure = game.figure.figureSamples[game.figure.figureID][game.figure.rotationNumber];
+            }
+            else {
+                game.figure.rotationNumber = 0;
+                game.currentFigure = game.figure.figureSamples[game.figure.figureID][game.figure.rotationNumber];
+            }
+            if (game.figure.figureX>6){
+                game.figure.figureX=6;
+            }
+            game.step(game.figure.figureX, game.figure.figureY, Move.ROTATION);
+            if (!game.figure.isRotationPossible){
+                game.currentFigure = game.bufferFigure;
+            }
+            else {
+                game.figure.isReachedRightBorder = false;
+            }
+            game.window.repaint();
         }
     }
 

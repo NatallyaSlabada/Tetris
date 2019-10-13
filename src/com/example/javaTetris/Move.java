@@ -4,4 +4,5 @@ public enum Move {
     DOWN,
     LEFT,
     RIGHT,
+    ROTATION
 }

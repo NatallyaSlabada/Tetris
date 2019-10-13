@@ -11,10 +11,9 @@ public class Game {
     JFrame window;
     JComponent grid;
     Figure figure;
-    FigureAction figureAction = new FigureAction(this);
-
-
     int[][] currentFigure;
+    int[][] bufferFigure;
+    FigureAction figureAction = new FigureAction(this);
 
     public void setFigureOnField() {
         currentFigure = getNewFigure();
@@ -47,12 +46,19 @@ public class Game {
                         else if (moveDirection==Move.LEFT || moveDirection==Move.RIGHT){
                             figure.isLeftRightMovementPossible = false;
                         }
+                        else if (moveDirection==Move.ROTATION){
+                            figure.isRotationPossible = false;
+                        }
                     }
                 }
-                if ((this.currentFigure[y][x]+GridCells.gridStable[x + figureX][y + figureY])==3){
-                    if (moveDirection==Move.DOWN){
+                int boundCell = this.currentFigure[y][x]+GridCells.gridStable[x + figureX][y + figureY];
+                switch (boundCell){
+                    case 3:{
                         figure.isReachedBottomBorder = true;
-                        System.out.println("isReachedBottomBorder "+figure.isReachedBottomBorder );
+                        break;
+                    }
+                    case -1:{
+                        figure.isReachedRightBorder = true;
                     }
                 }
             }
@@ -60,7 +66,7 @@ public class Game {
     }
 
     public void toStableGrid (int figureX, int figureY){
-        for (int y = 1; y > -1; y--) {
+        for (int y = 0; y < 4; y++) {
             for (int x = 0; x < 4; x++) {
                 if (this.currentFigure[y][x] == 1) {
                     GridCells.gridStable[x + figureX][y + figureY] = 1;

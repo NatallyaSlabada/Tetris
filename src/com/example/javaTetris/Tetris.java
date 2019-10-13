@@ -16,7 +16,7 @@ public class Tetris {
 
         Game game = new Game();
         game.setWindow();
-        game.speed = 500;
+        game.speed = 800;
 
 
         while (!isGameOver){
