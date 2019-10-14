@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 
 public class FigureAction implements KeyListener {
     Game game;
@@ -38,6 +40,7 @@ public class FigureAction implements KeyListener {
         game.figure.isRotationPossible=true;
     }
     protected void move (Move moveDirection){
+        int figureXtemp = game.figure.figureX;
         if (moveDirection==Move.LEFT){
             game.figure.figureX--;
             if (game.figure.figureX>=0){
@@ -64,24 +67,38 @@ public class FigureAction implements KeyListener {
             else game.figure.figureX--;
         }
         else if (moveDirection==Move.ROTATION){
+            System.out.println("Начало вращения, возможно? " + game.figure.isRotationPossible);
             game.bufferFigure = game.currentFigure;
+            //game.temp = game.currentFigure;
             game.figure.rotationNumber++;
+            System.out.println("Начало вращения game.figure.figureX " + game.figure.figureX);
             if (game.figure.rotationNumber<game.figure.numberOfPossibleRotations){
                 game.currentFigure = game.figure.figureSamples[game.figure.figureID][game.figure.rotationNumber];
+                //System.out.println("вращаем до проверки if " + game.figure.rotationNumber);
             }
             else {
                 game.figure.rotationNumber = 0;
                 game.currentFigure = game.figure.figureSamples[game.figure.figureID][game.figure.rotationNumber];
+                //System.out.println("вращаем до проверки else "+ game.figure.rotationNumber);
             }
             if (game.figure.figureX>6){
                 game.figure.figureX=6;
+                System.out.println("возвращаем в 6 figureX " + game.figure.figureX);
+                game.step(game.figure.figureX, game.figure.figureY, Move.ROTATION);
             }
-            game.step(game.figure.figureX, game.figure.figureY, Move.ROTATION);
+            else game.step(game.figure.figureX, game.figure.figureY, Move.ROTATION);
+
             if (!game.figure.isRotationPossible){
+                game.figure.figureX=figureXtemp;
+                game.figure.rotationNumber--;
+                System.out.println("вращение не возможно, реверт figureX " + game.figure.figureX);
                 game.currentFigure = game.bufferFigure;
+                game.step(game.figure.figureX, game.figure.figureY, Move.ROTATION);
+               // System.out.println("меняем на буферную фигурку");
             }
             else {
                 game.figure.isReachedRightBorder = false;
+                //System.out.println("вращение прошло после проверки");
             }
             game.window.repaint();
         }

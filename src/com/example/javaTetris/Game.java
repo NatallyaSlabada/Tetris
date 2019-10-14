@@ -13,6 +13,7 @@ public class Game {
     Figure figure;
     int[][] currentFigure;
     int[][] bufferFigure;
+    int[][] temp;
     FigureAction figureAction = new FigureAction(this);
 
     public void setFigureOnField() {

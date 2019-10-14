@@ -4,6 +4,7 @@ import javafx.event.EventDispatcher;
 
 import javax.swing.*;
 import java.awt.*;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 
@@ -40,6 +41,7 @@ public class Tetris {
                 if (game.figure.isLanded){
                     game.toStableGrid(game.figure.figureX, game.figure.figureY);
                 }
+                System.out.println("Время перед репейнтом в главном движении " + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(new Date()));
                 game.window.repaint();
             }
         }
