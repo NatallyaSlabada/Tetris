@@ -40,8 +40,8 @@ public class Tetris {
                 }
                 if (game.figure.isLanded){
                     game.toStableGrid(game.figure.figureX, game.figure.figureY);
+                    game.removeFilledLines();
                 }
-                System.out.println("Время перед репейнтом в главном движении " + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(new Date()));
                 game.window.repaint();
             }
         }

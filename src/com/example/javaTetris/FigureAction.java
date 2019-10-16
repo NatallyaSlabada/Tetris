@@ -67,19 +67,14 @@ public class FigureAction implements KeyListener {
             else game.figure.figureX--;
         }
         else if (moveDirection==Move.ROTATION){
-            System.out.println("Начало вращения, возможно? " + game.figure.isRotationPossible);
             game.bufferFigure = game.currentFigure;
-            //game.temp = game.currentFigure;
             game.figure.rotationNumber++;
-            System.out.println("Начало вращения game.figure.figureX " + game.figure.figureX);
             if (game.figure.rotationNumber<game.figure.numberOfPossibleRotations){
                 game.currentFigure = game.figure.figureSamples[game.figure.figureID][game.figure.rotationNumber];
-                //System.out.println("вращаем до проверки if " + game.figure.rotationNumber);
             }
             else {
                 game.figure.rotationNumber = 0;
                 game.currentFigure = game.figure.figureSamples[game.figure.figureID][game.figure.rotationNumber];
-                //System.out.println("вращаем до проверки else "+ game.figure.rotationNumber);
             }
             if (game.figure.figureX>6){
                 game.figure.figureX=6;

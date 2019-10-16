@@ -21,7 +21,7 @@ public class Game {
         for (int y = 0; y < 4; y++) {
             for (int x = 0; x < 4; x++) {
                 if (this.currentFigure[y][x] == 1) {
-                    GridCells.gridMovement[x + figure.figureX][y + figure.figureY] = 1;
+                    GridCells.gridMovement[y + figure.figureY][x + figure.figureX] = 1;
                 }
             }
         }
@@ -30,15 +30,15 @@ public class Game {
     public void step(int figureX, int figureY, Move moveDirection) {
         for (int y = 0; y < 20; y++) {
             for (int x = 0; x < 10; x++) {
-                GridCells.gridMovement[x][y] = 0;
+                GridCells.gridMovement[y][x] = 0;
             }
         }
 
         for (int y = 0; y < 4; y++) {
             for (int x = 0; x < 4; x++) {
                 if (this.currentFigure[y][x] == 1) {
-                    if(GridCells.gridStable[x + figureX][y + figureY]!=1){
-                        GridCells.gridMovement[x + figureX][y + figureY] = 1;
+                    if(GridCells.gridStable[y + figureY][x + figureX]!=1){
+                        GridCells.gridMovement[y + figureY][x + figureX] = 1;
                     }
                     else {
                         if (moveDirection==Move.DOWN){
@@ -52,15 +52,29 @@ public class Game {
                         }
                     }
                 }
-                int boundCell = this.currentFigure[y][x]+GridCells.gridStable[x + figureX][y + figureY];
+                int boundCell = this.currentFigure[y][x]+GridCells.gridStable[y + figureY][x + figureX];
                 switch (boundCell){
                     case 3:{
                         figure.isReachedBottomBorder = true;
                         break;
                     }
-                    case -1:{
+                    case 5:{
                         figure.isReachedRightBorder = true;
                     }
+                }
+            }
+        }
+    }
+
+    public void removeFilledLines (){
+        for (int y=0; y<20; y++){
+            int sum = 0;
+            for(int x: GridCells.gridStable[y]){
+                sum+=x;
+            }
+            if (sum==30 || sum==14){
+                for(int x: GridCells.gridStable[y]){
+                    x=0;
                 }
             }
         }
@@ -70,7 +84,7 @@ public class Game {
         for (int y = 0; y < 4; y++) {
             for (int x = 0; x < 4; x++) {
                 if (this.currentFigure[y][x] == 1) {
-                    GridCells.gridStable[x + figureX][y + figureY] = 1;
+                    GridCells.gridStable[y + figureY][x + figureX] = 1;
                 }
             }
         }
