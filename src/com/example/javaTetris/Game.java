@@ -2,6 +2,7 @@ package com.example.javaTetris;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Arrays;
 
 public class Game {
     public Game() {
@@ -71,11 +72,15 @@ public class Game {
             int sum = 0;
             for(int x: GridCells.gridStable[y]){
                 sum+=x;
+
             }
-            if (sum==30 || sum==14){
-                for(int x: GridCells.gridStable[y]){
-                    x=0;
-                }
+            //System.out.println("sum "+sum);
+            if (sum==10){
+                System.out.println("inside if ");
+               for (int line = y; line>0; line--){
+                   GridCells.gridStable[line]= Arrays.copyOf(GridCells.gridStable[line-1],13);
+               }
+                GridCells.gridStable[0] = new int[]{0,0,0,0,0,0,0,0,0,4,0,0,0};
             }
         }
     }
