@@ -7,17 +7,15 @@ import java.awt.geom.Rectangle2D;
 public class GridCells extends JComponent {
     public GridCells () {
         for (int x=0; x<10; x++){
-            gridStable[19][x]=2;
+            gridStable[19][x]=-2;
         }
         for (int y=0; y<19; y++){
-            gridStable[y][9]=4;
+            gridStable[y][9]=-4;
         }
     }
     //Rectangle2D[][] grid = new Rectangle2D[10][20];
-    public static int[][] gridMovement = new int[20][10];
-    public static int[][] gridStable = new int[23][13];
-
-
+    public int[][] gridMovement = new int[20][10];
+    public int[][] gridStable = new int[23][13];
 
     @Override
     public void paintComponent(Graphics g) {
@@ -56,9 +54,4 @@ public class GridCells extends JComponent {
             y+=30;
         }
     }
-
-
-
-
-
 }

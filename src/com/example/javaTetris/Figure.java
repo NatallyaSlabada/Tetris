@@ -149,7 +149,7 @@ public class Figure {
     };
     public Random random = new Random();
     public int[][] getNewFigure (){
-        random.nextInt(7);
+        //random.nextInt(7);
         figureID = random.nextInt(7);
         numberOfPossibleRotations = figureSamples[figureID].length;
         return figureSamples[figureID][0];

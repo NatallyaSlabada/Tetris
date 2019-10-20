@@ -28,7 +28,7 @@ public class FigureAction implements KeyListener {
                 break;
             }
             case (KeyEvent.VK_DOWN): {
-                game.speed = 70;
+                game.speed = game.accelerationSpeed;
                 break;
             }
             case (KeyEvent.VK_UP): {
@@ -41,6 +41,7 @@ public class FigureAction implements KeyListener {
     }
     protected void move (Move moveDirection){
         int figureXtemp = game.figure.figureX;
+        int figureYtemp = game.figure.figureY;
         if (moveDirection==Move.LEFT){
             game.figure.figureX--;
             if (game.figure.figureX>=0){
@@ -78,22 +79,36 @@ public class FigureAction implements KeyListener {
             }
             if (game.figure.figureX>6){
                 game.figure.figureX=6;
-                System.out.println("возвращаем в 6 figureX " + game.figure.figureX);
                 game.step(game.figure.figureX, game.figure.figureY, Move.ROTATION);
             }
-            else game.step(game.figure.figureX, game.figure.figureY, Move.ROTATION);
-
+            else if (game.figure.figureY>16){
+                game.figure.figureY=16;
+                game.step(game.figure.figureX, game.figure.figureY, Move.ROTATION);
+            }
+            else {
+                for (int counter=0; counter<4; counter++){
+                    if((game.figure.figureX-counter)>0){
+                        game.figure.figureX=game.figure.figureX-counter;
+                    }
+                    game.step(game.figure.figureX, game.figure.figureY, Move.ROTATION);
+                    if (game.figure.isRotationPossible){
+                        break;
+                    }
+                    else {
+                        if (counter!=3)game.figure.isRotationPossible = true;
+                    }
+                    game.figure.figureX=figureXtemp;
+                }
+            }
             if (!game.figure.isRotationPossible){
                 game.figure.figureX=figureXtemp;
+                game.figure.figureY=figureYtemp;
                 game.figure.rotationNumber--;
-                System.out.println("вращение не возможно, реверт figureX " + game.figure.figureX);
                 game.currentFigure = game.bufferFigure;
                 game.step(game.figure.figureX, game.figure.figureY, Move.ROTATION);
-               // System.out.println("меняем на буферную фигурку");
             }
             else {
                 game.figure.isReachedRightBorder = false;
-                //System.out.println("вращение прошло после проверки");
             }
             game.window.repaint();
         }
@@ -108,7 +123,7 @@ public class FigureAction implements KeyListener {
     public void keyReleased(KeyEvent e) {
         int keyCode = e.getKeyCode();
         if (keyCode==KeyEvent.VK_DOWN){
-            game.speed = 500;
+            game.speed = game.speedBuffer;
         }
     }
 }

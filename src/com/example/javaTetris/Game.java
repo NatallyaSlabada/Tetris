@@ -2,15 +2,21 @@ package com.example.javaTetris;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Arrays;
+import java.util.*;
+import java.text.SimpleDateFormat;
 
 public class Game {
     public Game() {
 
     }
+    Object[] dialogOptions = {"Restart", "Finish"};
+    int score = 0;
+    boolean isGameOver = false;
     int speed;
+    int accelerationSpeed=70;
+    int speedBuffer;
     JFrame window;
-    JComponent grid;
+    GridCells grid;
     Figure figure;
     int[][] currentFigure;
     int[][] bufferFigure;
@@ -22,24 +28,34 @@ public class Game {
         for (int y = 0; y < 4; y++) {
             for (int x = 0; x < 4; x++) {
                 if (this.currentFigure[y][x] == 1) {
-                    GridCells.gridMovement[y + figure.figureY][x + figure.figureX] = 1;
+                    if(grid.gridStable[y + figure.figureY][x + figure.figureX]!=1){
+                        grid.gridMovement[y + figure.figureY][x + figure.figureX] = 1;
+                    }
+                    else {
+                        isGameOver = true;
+                    }
                 }
             }
         }
     }
 
-    public void step(int figureX, int figureY, Move moveDirection) {
+    public void cleanGridMovement (){
         for (int y = 0; y < 20; y++) {
             for (int x = 0; x < 10; x++) {
-                GridCells.gridMovement[y][x] = 0;
+                grid.gridMovement[y][x] = 0;
             }
         }
+    }
 
-        for (int y = 0; y < 4; y++) {
+    public void step(int figureX, int figureY, Move moveDirection) {
+        cleanGridMovement();
+        //System.out.println("Beginning of step: "+Thread.currentThread().getName()+" Time:"+ new SimpleDateFormat("ss.SSS").format(new Date()));
+       for (int y = 0; y < 4; y++) {
             for (int x = 0; x < 4; x++) {
                 if (this.currentFigure[y][x] == 1) {
-                    if(GridCells.gridStable[y + figureY][x + figureX]!=1){
-                        GridCells.gridMovement[y + figureY][x + figureX] = 1;
+                    if(grid.gridStable[y + figureY][x + figureX]!=1){
+                        //System.out.println(Thread.currentThread().getName()+" "+(y + figureY)+" "+(x + figureX) +" Time:"+ new SimpleDateFormat("ss.SSS").format(new Date()));
+                        grid.gridMovement[y + figureY][x + figureX] = 1;
                     }
                     else {
                         if (moveDirection==Move.DOWN){
@@ -53,34 +69,41 @@ public class Game {
                         }
                     }
                 }
-                int boundCell = this.currentFigure[y][x]+GridCells.gridStable[y + figureY][x + figureX];
+                int boundCell = this.currentFigure[y][x]+grid.gridStable[y + figureY][x + figureX];
                 switch (boundCell){
-                    case 3:{
+                    case -1:{
                         figure.isReachedBottomBorder = true;
                         break;
                     }
-                    case 5:{
+                    case -3:{
                         figure.isReachedRightBorder = true;
                     }
                 }
             }
         }
+        //System.out.println("Ending of step: "+Thread.currentThread().getName()+" Time:"+ new SimpleDateFormat("ss.SSS").format(new Date()));
     }
 
     public void removeFilledLines (){
         for (int y=0; y<20; y++){
             int sum = 0;
-            for(int x: GridCells.gridStable[y]){
+            for(int x: grid.gridStable[y]){
                 sum+=x;
-
             }
-            //System.out.println("sum "+sum);
             if (sum==10){
-                System.out.println("inside if ");
+                score += 10;
                for (int line = y; line>0; line--){
-                   GridCells.gridStable[line]= Arrays.copyOf(GridCells.gridStable[line-1],13);
+                   grid.gridStable[line]= Arrays.copyOf(grid.gridStable[line-1],13);
                }
-                GridCells.gridStable[0] = new int[]{0,0,0,0,0,0,0,0,0,4,0,0,0};
+                grid.gridStable[0] = new int[]{0,0,0,0,0,0,0,0,0,-4,0,0,0};
+               for (int x=0; x<10; x++ ){
+                   if (grid.gridStable[19][x]==0||grid.gridStable[19][x]==-4){
+                       grid.gridStable[19][x]=-2;
+                   }
+               }
+                if (speed>10){
+                    speed = speedBuffer -= 10;
+                }
             }
         }
     }
@@ -89,7 +112,7 @@ public class Game {
         for (int y = 0; y < 4; y++) {
             for (int x = 0; x < 4; x++) {
                 if (this.currentFigure[y][x] == 1) {
-                    GridCells.gridStable[y + figureY][x + figureX] = 1;
+                    grid.gridStable[y + figureY][x + figureX] = 1;
                 }
             }
         }
