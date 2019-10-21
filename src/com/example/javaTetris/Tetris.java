@@ -63,14 +63,20 @@ public class Tetris {
             }
         }
         int userInput=-1;
+        UIManager UI=new UIManager();
+        UI.put("OptionPane.background", Color.GRAY);
+        UI.put("Panel.background", Color.GRAY);
+        UI.put("OptionPane.messageFont", new Font("Comic Sans MS", Font.BOLD, 17));
+        UI.put("OptionPane.buttonFont", new Font("Arial", Font.PLAIN, 14));
+
         while (userInput==-1){
             userInput = JOptionPane.showOptionDialog(
                     game.window,
-                    "Your score is "+Integer.toString(game.score),
+                    "Your score:\n"+"    "+Integer.toString(game.score),
                     "GAME OVER",
                     JOptionPane.YES_NO_OPTION,
                     JOptionPane.INFORMATION_MESSAGE,
-                    new ImageIcon("C:\\gameOver2.jpg"),
+                    new ImageIcon("src\\gameOver2.png"),
                     game.dialogOptions,
                     null
             );

@@ -10,7 +10,7 @@ public class Game {
 
     }
     Object[] dialogOptions = {"Restart", "Finish"};
-    int score = 0;
+    int score = 130;
     boolean isGameOver = false;
     int speed;
     int accelerationSpeed=70;
