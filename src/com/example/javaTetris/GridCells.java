@@ -51,7 +51,7 @@ public class GridCells extends JComponent {
             for (int x = 0; x < 300;) {
                 if (gridMovement[y/30][x/30]==1){
                     Rectangle2D rect = new Rectangle(x,y,30,30);
-                    g2.setColor(Color.GRAY);
+                    g2.setColor(Color.ORANGE);
                     g2.fill(rect);
                     g2.setColor(Color.BLACK);
                     g2.draw(rect);
