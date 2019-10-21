@@ -36,6 +36,11 @@ public class Tetris {
                     game.figure.figureY--;
                 }
                 if (game.figure.isReachedBottomBorder){
+                    try {
+                        Thread.sleep(80);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     game.figure.isLanded = true;
                 }
                 if (!game.figure.isDownMovementPossible){

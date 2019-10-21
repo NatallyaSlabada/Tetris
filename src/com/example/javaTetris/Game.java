@@ -128,7 +128,7 @@ public class Game {
         this.window.setSize(315, 637);
         this.window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.window.setTitle("Tetris");
-        this.window.getContentPane().setBackground(Color.CYAN);
+        this.window.getContentPane().setBackground(Color.BLACK);
         this.grid = new GridCells();
         grid.addKeyListener(figureAction);
         grid.setFocusable(true);
