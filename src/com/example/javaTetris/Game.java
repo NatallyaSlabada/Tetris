@@ -17,11 +17,18 @@ public class Game {
     int speedBuffer;
     JFrame window;
     GridCells grid;
-    Figure figure;
+
     int[][] currentFigure;
     int[][] bufferFigure;
     int[][] temp;
     FigureAction figureAction = new FigureAction(this);
+
+    Figure figure;
+
+    private static Figure getNewFigure(){
+        return FigureFactory.getNewFigure();
+    }
+
 
     public void setFigureOnField() {
         currentFigure = getNewFigure();
@@ -118,10 +125,6 @@ public class Game {
         }
     }
 
-    public int[][] getNewFigure() {
-        figure = new Figure();
-        return figure.getNewFigure();
-    }
 
     public void setWindow() {
         this.window = new JFrame();
