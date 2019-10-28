@@ -29,6 +29,7 @@ public class Lreverse extends Figure {
         state3.next = state4;
         state4.next = state1;
         currentState = state1;
+        figureColorIndex = 5;
     }
 
     private static Lreverse ourInstance = new Lreverse();

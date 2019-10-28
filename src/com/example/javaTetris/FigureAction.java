@@ -9,6 +9,7 @@ import java.util.Date;
 import java.text.SimpleDateFormat;
 
 public class FigureAction implements KeyListener {
+    FigureDelegate figureDelegate =
     Game game;
 
     public FigureAction(Game game) {

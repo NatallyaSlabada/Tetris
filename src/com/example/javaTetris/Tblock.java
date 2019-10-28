@@ -29,6 +29,7 @@ public class Tblock extends Figure {
         state3.next = state4;
         state4.next = state1;
         currentState = state1;
+        figureColorIndex = 6;
     }
 
     private static Tblock ourInstance = new Tblock();

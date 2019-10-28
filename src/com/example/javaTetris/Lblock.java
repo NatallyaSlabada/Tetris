@@ -29,6 +29,7 @@ public class Lblock extends Figure {
         state3.next = state4;
         state4.next = state1;
         currentState = state1;
+        figureColorIndex = 4;
     }
 
     private static Lblock ourInstance = new Lblock();

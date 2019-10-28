@@ -68,7 +68,7 @@ public class Tetris {
         UI.put("Panel.background", Color.GRAY);
         UI.put("OptionPane.messageFont", new Font("Comic Sans MS", Font.BOLD, 17));
         UI.put("OptionPane.buttonFont", new Font("Arial", Font.PLAIN, 14));
-
+        Object[] dialogOptions = {"Restart", "Finish"};
         while (userInput==-1){
             userInput = JOptionPane.showOptionDialog(
                     game.window,
@@ -77,7 +77,7 @@ public class Tetris {
                     JOptionPane.YES_NO_OPTION,
                     JOptionPane.INFORMATION_MESSAGE,
                     new ImageIcon("src\\gameOver2.png"),
-                    game.dialogOptions,
+                    dialogOptions,
                     null
             );
             switch (userInput){

@@ -9,6 +9,7 @@ public class Cube extends Figure {
         };
         state1.next = state1;
         currentState = state1;
+        figureColorIndex = 1;
     }
 
     private static Cube ourInstance = new Cube();
