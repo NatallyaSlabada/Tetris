@@ -8,6 +8,7 @@ public class Cube extends Figure {
                 new int[]{-1,-1}
         };
         state1.next = state1;
+        state1.previous = state1;
         currentState = state1;
         figureColorIndex = 1;
     }

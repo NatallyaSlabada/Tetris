@@ -16,6 +16,8 @@ public class Greverse extends Figure{
         state1.next = state2;
         state2.next = state1;
         currentState = state1;
+        state2.previous = state1;
+        state1.previous = state2;
         figureColorIndex = 3;
     }
 

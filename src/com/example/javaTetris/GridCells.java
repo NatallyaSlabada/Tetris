@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
-public class GridCells extends JComponent {
+public class GridCells extends JComponent implements GridCellsDelegate {
     public GridCells () {
         /*for (int x=0; x<10; x++){
             gridStable[19][x]=-2;
@@ -16,6 +16,40 @@ public class GridCells extends JComponent {
     //public int[][] gridMovement = new int[20][10];
     public int[][] grid = new int[20][10];
     Figure figure;
+    @Override
+    public void setFigureY(int figureY){
+        figure.setFigureY(figureY);
+    }
+    @Override
+    public int getFigureY (){
+        return figure.getFigureY();
+    }
+    @Override
+    public void figureSetLanded (boolean isLanded){
+        figure.setLanded(isLanded);
+    }
+    @Override
+    public boolean figureGetLanded (){
+        return figure.getLanded();
+    }
+    @Override
+    public boolean figureGetDownMovementPossible(){
+        return figure.isDownMovementPossible;
+    }
+    @Override
+    public boolean figureGetReachedBottomBorder(){
+        return figure.isReachedBottomBorder;
+    }
+
+
+
+
+
+
+
+
+
+
 
     public static Figure getNewFigure(){
         return FigureFactory.getNewFigure();
@@ -49,16 +83,17 @@ public class GridCells extends JComponent {
         }
     }
 
-    public void step(int figureX, int figureY, Move moveDirection) {
+    @Override
+    public void step(Move moveDirection) {
         cleanPreviousFigure();
         int[][] currentFigure = figure.getFigureArray();
         //System.out.println("Beginning of step: "+Thread.currentThread().getName()+" Time:"+ new SimpleDateFormat("ss.SSS").format(new Date()));
         for (int y = 0; y < currentFigure.length; y++) {
             for (int x = 0; x < currentFigure[0].length; x++) {
                 if (currentFigure[y][x] == -1) {
-                    if(grid[y + figureY][x + figureX] == 0){
+                    if(grid[y + figure.figureY][x + figure.figureX] == 0){
                         //System.out.println(Thread.currentThread().getName()+" "+(y + figureY)+" "+(x + figureX) +" Time:"+ new SimpleDateFormat("ss.SSS").format(new Date()));
-                        grid[y + figureY][x + figureX] = -1;
+                        grid[y + figure.figureY][x + figure.figureX] = -1;
                     }
                     else {
                         if (moveDirection==Move.DOWN){
@@ -72,10 +107,10 @@ public class GridCells extends JComponent {
                         }
                     }
                 }
-                if((y+figureY)==19){
+                if((y+figure.figureY)==19){
                     figure.isReachedBottomBorder = true;
                 }
-                if ((x+figureX)==9){
+                if ((x+figure.figureX)==9){
                     figure.isReachedRightBorder = true;
                 }
             }

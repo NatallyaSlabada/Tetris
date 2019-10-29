@@ -5,30 +5,42 @@ import java.awt.*;
 import java.util.*;
 import java.text.SimpleDateFormat;
 
-public class Game {
-    public Game() {
-
+public class Game implements GameDelegate{
+    public Game(int gameSpeed) {
+        this.speed=this.speedBuffer=gameSpeed;
     }
     int score = 0;
     boolean isGameOver = false;
-    int speed;
+    private int speed;
     int accelerationSpeed=70;
     int speedBuffer;
     JFrame window;
-    private GridCells gridCells;
+    public GridCells gridCells;
+    FigureAction figureAction;
 
-    int[][] bufferFigure;
-    int[][] temp;
-    FigureAction figureAction = new FigureAction(this);
+    @Override
+    public void repaintGrid (){
+        this.window.repaint();
+    }
+    @Override
+    public int getAccelerationSpeed(){
+        return this.accelerationSpeed;
+    }
+    @Override
+    public int getSpeedBuffer(){
+        return this.speedBuffer;
+    }
+    @Override
+    public void setSpeed (int speed){
+        this.speed=speed;
+    }
+
+    public int getSpeed (){
+        return this.speed;
+    }
 
     public void setFigureOnField() {
         isGameOver = !gridCells.setFigureOnField();
-    }
-
-
-
-    public void step(int figureX, int figureY, Move moveDirection) {
-
     }
 
     public void removeFilledLines (){
@@ -57,6 +69,7 @@ public class Game {
         this.window.setTitle("Tetris");
         this.window.getContentPane().setBackground(Color.BLACK);
         this.gridCells = new GridCells();
+        this.figureAction = new FigureAction(this.gridCells, this);
         gridCells.addKeyListener(figureAction);
         gridCells.setFocusable(true);
         this.window.add(gridCells);

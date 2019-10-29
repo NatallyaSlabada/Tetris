@@ -15,51 +15,48 @@ public class Tetris {
     }
 
     public void startGame (){
-        Game game = new Game();
+        Game game = new Game(700);
         game.setWindow();
-        game.speed = game.speedBuffer = 700;
+        GridCellsDelegate gridCellsDelegate = game.gridCells;
         while (!game.isGameOver){
             game.setFigureOnField();
-            while (!game.figure.isLanded){
+            while (!gridCellsDelegate.figureGetLanded()){
                 try {
-                    Thread.sleep(game.speed);
+                    Thread.sleep(game.getSpeed());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                game.figure.figureY++;
+                gridCellsDelegate.setFigureY(gridCellsDelegate.getFigureY()+1);
                 //System.out.println("Ending step in Tetris: "+Thread.currentThread().getName()+" Time:"+ new SimpleDateFormat("ss.SSS").format(new Date()));
                 //System.out.println("isReachedBottomBorder "+game.figure.isReachedBottomBorder);
-                if (!game.figure.isReachedBottomBorder){
-                    game.step(game.figure.figureX, game.figure.figureY, Move.DOWN);
+                if (!gridCellsDelegate.figureGetReachedBottomBorder()){
+                    gridCellsDelegate.step(Move.DOWN);
                 }
                 else {
-                    game.figure.figureY--;
+                    gridCellsDelegate.setFigureY(gridCellsDelegate.getFigureY()-1);
                 }
-                if (game.figure.isReachedBottomBorder){
+                if (gridCellsDelegate.figureGetReachedBottomBorder()){
                     try {
                         Thread.sleep(80);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    game.figure.isLanded = true;
+                    gridCellsDelegate.figureSetLanded(true);
                 }
-                if (!game.figure.isDownMovementPossible){
-                    game.figure.figureY--;
-                    game.step(game.figure.figureX, game.figure.figureY, Move.DOWN);
-                    game.figure.isLanded = true;
+                if (!gridCellsDelegate.figureGetDownMovementPossible()){
+                    gridCellsDelegate.setFigureY(gridCellsDelegate.getFigureY()-1);
+                    gridCellsDelegate.step(Move.DOWN);
+                    gridCellsDelegate.figureSetLanded(true);
                 }
-                if (game.figure.isLanded){
-                    game.toStableGrid(game.figure.figureX, game.figure.figureY);
-                    game.window.repaint();
+                if (gridCellsDelegate.figureGetLanded()){
                     try {
                         Thread.sleep(300);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    game.cleanGridMovement();
                     game.removeFilledLines();
                 }
-                game.window.repaint();
+                game.repaintGrid();
             }
         }
         int userInput=-1;

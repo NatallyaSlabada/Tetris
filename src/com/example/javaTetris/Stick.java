@@ -17,6 +17,8 @@ public class Stick extends Figure{
         state2.next = state1;
         currentState = state1;
         figureColorIndex = 0;
+        state2.previous = state1;
+        state1.previous = state2;
     }
     private static Stick ourInstance = new Stick();
     public static Stick getStick() {

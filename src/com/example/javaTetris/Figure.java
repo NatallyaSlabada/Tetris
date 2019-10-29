@@ -1,9 +1,6 @@
 package com.example.javaTetris;
 
-import java.awt.*;
-import java.util.Random;
-
-public abstract class Figure implements FigureDelegate{
+public abstract class Figure {
     //Rectangle rectangle = new Rectangle(30,30);
     int figureX = 3;
     int figureY = 0;
@@ -14,25 +11,36 @@ public abstract class Figure implements FigureDelegate{
     boolean isRotationPossible = true;
     boolean isReachedBottomBorder = false;
     boolean isReachedRightBorder = false;
-
-    public Figure figure;
     RotationState currentState;
     int figureColorIndex;
+
+    public void setFigureY(int figureY){
+        this.figureY=figureY;
+    }
+    public int getFigureY (){
+        return this.figureY;
+    }
+    public void setLanded (boolean isLanded){
+        this.isLanded=isLanded;
+    }
+    public boolean getLanded (){
+        return this.isLanded;
+    }
+    public boolean getDownMovementPossible(){
+        return this.isDownMovementPossible;
+    }
+    public boolean getReachedBottomBorder(){
+        return this.isReachedBottomBorder;
+    }
 
     public void rotate (){
         currentState = currentState.next;
     }
+    public void rotateReverse() {
+        currentState = currentState.previous;
+    }
     public int[][] getFigureArray(){
         return currentState.figureArray;
-    }
-
-    @Override
-    public void setFigureX (int figureX){
-        this.figureX=figureX;
-    }
-    @Override
-    public int getFigureX (){
-        return this.figureX;
     }
 
 }

@@ -29,6 +29,10 @@ public class Lblock extends Figure {
         state3.next = state4;
         state4.next = state1;
         currentState = state1;
+        state1.previous = state4;
+        state2.previous = state1;
+        state3.previous = state2;
+        state4.previous = state3;
         figureColorIndex = 4;
     }
 
