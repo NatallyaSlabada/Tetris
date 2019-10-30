@@ -25,7 +25,9 @@ public class FigureAction extends Figure implements KeyListener {
                 break;
             }
             case (KeyEvent.VK_LEFT): {
+                System.out.println("зашли в кейивент лефт");
                 move(Move.LEFT);
+                System.out.println("сделали метод мув к кейивенте лефт");
                 break;
             }
             case (KeyEvent.VK_DOWN): {
@@ -45,11 +47,14 @@ public class FigureAction extends Figure implements KeyListener {
         int figureYtemp = figureY;
         if (moveDirection==Move.LEFT){
             if (figureX-1>=0){
+                System.out.println("figureX начальное: "+figureX);
                 figureX--;
+                System.out.println("figureX уменьшаем: "+figureX);
                 isReachedRightBorder = false;
                 gridCellsDelegate.step(Move.LEFT);
                 if (!isLeftRightMovementPossible){
                     figureX++;
+                    System.out.println("figureX возвращается назад: "+figureX);
                     gridCellsDelegate.step(Move.LEFT);
                 }
                 gameDelegate.repaintGrid();

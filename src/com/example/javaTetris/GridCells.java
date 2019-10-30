@@ -3,6 +3,8 @@ package com.example.javaTetris;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class GridCells extends JComponent implements GridCellsDelegate {
     public GridCells () {
@@ -16,38 +18,39 @@ public class GridCells extends JComponent implements GridCellsDelegate {
     //public int[][] gridMovement = new int[20][10];
     public int[][] grid = new int[20][10];
     Figure figure;
-    @Override
-    public void setFigureY(int figureY){
-        figure.setFigureY(figureY);
-    }
-    @Override
-    public int getFigureY (){
-        return figure.getFigureY();
-    }
-    @Override
-    public void figureSetLanded (boolean isLanded){
-        figure.setLanded(isLanded);
-    }
+
     @Override
     public boolean figureGetLanded (){
         return figure.getLanded();
     }
-    @Override
-    public boolean figureGetDownMovementPossible(){
-        return figure.isDownMovementPossible;
+
+
+    public void updateGrid(){
+        //System.out.println("Ending step in Tetris: "+Thread.currentThread().getName()+" Time:"+ new SimpleDateFormat("ss.SSS").format(new Date()));
+        //System.out.println("isReachedBottomBorder "+game.figure.isReachedBottomBorder);
+        if (!figure.isReachedBottomBorder){
+            figure.figureY++;
+            step(Move.DOWN);
+        }
+        if (!figure.isDownMovementPossible){
+            figure.figureY--;
+            step(Move.DOWN);
+            figure.isLanded = true;
+        }
+        if (figure.isReachedBottomBorder){
+            figure.isLanded = true;
+        }
+        if (figure.isLanded){
+            int[][] currentFigure = figure.getFigureArray();
+            for (int y = 0; y < currentFigure.length; y++) {
+                for (int x = 0; x < currentFigure[0].length; x++) {
+                    if (currentFigure[y][x] == -1) {
+                        grid[y + figure.figureY][x + figure.figureX] = figure.figureColorIndex;
+                    }
+                }
+            }
+        }
     }
-    @Override
-    public boolean figureGetReachedBottomBorder(){
-        return figure.isReachedBottomBorder;
-    }
-
-
-
-
-
-
-
-
 
 
 
@@ -83,10 +86,10 @@ public class GridCells extends JComponent implements GridCellsDelegate {
         }
     }
 
-    @Override
     public void step(Move moveDirection) {
         cleanPreviousFigure();
         int[][] currentFigure = figure.getFigureArray();
+        System.out.println("FigureX из метода степ: "+figure.figureX);
         //System.out.println("Beginning of step: "+Thread.currentThread().getName()+" Time:"+ new SimpleDateFormat("ss.SSS").format(new Date()));
         for (int y = 0; y < currentFigure.length; y++) {
             for (int x = 0; x < currentFigure[0].length; x++) {
@@ -173,12 +176,37 @@ public class GridCells extends JComponent implements GridCellsDelegate {
                 return Color.MAGENTA;
             }
             case -1:{
-                selectColor(figure.figureColorIndex);
-                break;
+                return selectColor(figure.figureColorIndex);
+            }
+            default:{
+                return Color.WHITE;
             }
         }
-        return Color.WHITE;
     }
 }
 
+
+
+    /*@Override
+    public void setFigureY(int figureY){
+        figure.setFigureY(figureY);
+    }
+    @Override
+    public int getFigureY (){
+        return figure.getFigureY();
+    }
+    @Override
+    public void figureSetLanded (boolean isLanded){
+        figure.setLanded(isLanded);
+    }
+
+    @Override
+    public boolean figureGetDownMovementPossible(){
+        return figure.isDownMovementPossible;
+    }
+    @Override
+    public boolean figureGetReachedBottomBorder(){
+        return figure.isReachedBottomBorder;
+    }
+*/
 

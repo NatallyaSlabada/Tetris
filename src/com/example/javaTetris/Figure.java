@@ -3,6 +3,7 @@ package com.example.javaTetris;
 public abstract class Figure {
     //Rectangle rectangle = new Rectangle(30,30);
     int figureX = 3;
+    
     int figureY = 0;
     int figureID;
     boolean isLanded = false;

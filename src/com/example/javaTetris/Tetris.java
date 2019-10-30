@@ -18,36 +18,13 @@ public class Tetris {
         Game game = new Game(700);
         game.setWindow();
         GridCellsDelegate gridCellsDelegate = game.gridCells;
+        game.setFigureOnField();
         while (!game.isGameOver){
-            game.setFigureOnField();
-            while (!gridCellsDelegate.figureGetLanded()){
-                try {
-                    Thread.sleep(game.getSpeed());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                gridCellsDelegate.setFigureY(gridCellsDelegate.getFigureY()+1);
-                //System.out.println("Ending step in Tetris: "+Thread.currentThread().getName()+" Time:"+ new SimpleDateFormat("ss.SSS").format(new Date()));
-                //System.out.println("isReachedBottomBorder "+game.figure.isReachedBottomBorder);
-                if (!gridCellsDelegate.figureGetReachedBottomBorder()){
-                    gridCellsDelegate.step(Move.DOWN);
-                }
-                else {
-                    gridCellsDelegate.setFigureY(gridCellsDelegate.getFigureY()-1);
-                }
-                if (gridCellsDelegate.figureGetReachedBottomBorder()){
-                    try {
-                        Thread.sleep(80);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    gridCellsDelegate.figureSetLanded(true);
-                }
-                if (!gridCellsDelegate.figureGetDownMovementPossible()){
-                    gridCellsDelegate.setFigureY(gridCellsDelegate.getFigureY()-1);
-                    gridCellsDelegate.step(Move.DOWN);
-                    gridCellsDelegate.figureSetLanded(true);
-                }
+            if (gridCellsDelegate.figureGetLanded()){
+                game.setFigureOnField();
+            }
+            else {
+                game.updateGrid();
                 if (gridCellsDelegate.figureGetLanded()){
                     try {
                         Thread.sleep(300);
@@ -58,7 +35,17 @@ public class Tetris {
                 }
                 game.repaintGrid();
             }
+            try {
+                Thread.sleep(game.getSpeed());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
+
+
+
+
+
         int userInput=-1;
         UIManager UI=new UIManager();
         UI.put("OptionPane.background", Color.GRAY);

@@ -43,6 +43,10 @@ public class Game implements GameDelegate{
         isGameOver = !gridCells.setFigureOnField();
     }
 
+    public void updateGrid(){
+        gridCells.updateGrid();
+    }
+
     public void removeFilledLines (){
         for (int y=0; y<20; y++){
             int sum = 0;
