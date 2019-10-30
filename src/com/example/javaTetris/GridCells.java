@@ -17,7 +17,7 @@ public class GridCells extends JComponent implements GridCellsDelegate {
     }
     //public int[][] gridMovement = new int[20][10];
     public int[][] grid = new int[20][10];
-    Figure figure;
+    static Figure figure;
 
     @Override
     public boolean figureGetLanded (){
@@ -89,7 +89,6 @@ public class GridCells extends JComponent implements GridCellsDelegate {
     public void step(Move moveDirection) {
         cleanPreviousFigure();
         int[][] currentFigure = figure.getFigureArray();
-        System.out.println("FigureX из метода степ: "+figure.figureX);
         //System.out.println("Beginning of step: "+Thread.currentThread().getName()+" Time:"+ new SimpleDateFormat("ss.SSS").format(new Date()));
         for (int y = 0; y < currentFigure.length; y++) {
             for (int x = 0; x < currentFigure[0].length; x++) {

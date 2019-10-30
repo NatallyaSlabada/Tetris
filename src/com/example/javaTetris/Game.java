@@ -11,7 +11,7 @@ public class Game implements GameDelegate{
     }
     int score = 0;
     boolean isGameOver = false;
-    private int speed;
+    static public int speed;
     int accelerationSpeed=70;
     int speedBuffer;
     JFrame window;

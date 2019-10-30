@@ -15,7 +15,7 @@ public class FigureAction extends Figure implements KeyListener {
         gridCellsDelegate = gridCells;
         gameDelegate = game;
     }
-
+    Figure figure;
     @Override
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
@@ -25,12 +25,13 @@ public class FigureAction extends Figure implements KeyListener {
                 break;
             }
             case (KeyEvent.VK_LEFT): {
-                System.out.println("зашли в кейивент лефт");
                 move(Move.LEFT);
-                System.out.println("сделали метод мув к кейивенте лефт");
                 break;
             }
             case (KeyEvent.VK_DOWN): {
+                System.out.println(gameDelegate.getAccelerationSpeed());
+                System.out.println(Game.speed);
+
                 gameDelegate.setSpeed(gameDelegate.getAccelerationSpeed());
                 break;
             }
@@ -39,72 +40,70 @@ public class FigureAction extends Figure implements KeyListener {
                 break;
             }
         }
-        isLeftRightMovementPossible=true;
-        isRotationPossible=true;
+        figure.isLeftRightMovementPossible=true;
+        figure.isRotationPossible=true;
     }
     private void move (Move moveDirection){
-        int figureXtemp = figureX;
-        int figureYtemp = figureY;
+        figure = GridCells.figure;
+        int figureXtemp = figure.figureX;
+        int figureYtemp = figure.figureY;
         if (moveDirection==Move.LEFT){
-            if (figureX-1>=0){
-                System.out.println("figureX начальное: "+figureX);
-                figureX--;
-                System.out.println("figureX уменьшаем: "+figureX);
-                isReachedRightBorder = false;
+            if (figure.figureX-1>=0){
+                figure.figureX--;
+                figure.isReachedRightBorder = false;
                 gridCellsDelegate.step(Move.LEFT);
-                if (!isLeftRightMovementPossible){
-                    figureX++;
-                    System.out.println("figureX возвращается назад: "+figureX);
+                if (!figure.isLeftRightMovementPossible){
+                    figure.figureX++;
                     gridCellsDelegate.step(Move.LEFT);
                 }
                 gameDelegate.repaintGrid();
             }
         }
         else if (moveDirection==Move.RIGHT){
-            if (!isReachedRightBorder){
-                figureX++;
+            if (!figure.isReachedRightBorder){
+                figure.figureX++;
                 gridCellsDelegate.step(Move.RIGHT);
-                if (!isLeftRightMovementPossible){
-                    figureX--;
+                if (!figure.isLeftRightMovementPossible){
+                    figure.figureX--;
                     gridCellsDelegate.step(Move.RIGHT);
                 }
                 gameDelegate.repaintGrid();
             }
         }
         else if (moveDirection==Move.ROTATION){
-            if (!isReachedBottomBorder){
-                rotate();
-                if ((10-figureX)<(getFigureArray()[0].length)){
-                    figureX=10-getFigureArray()[0].length;
+            if (!figure.isReachedBottomBorder){
+                figure.rotate();
+                if ((10-figure.figureX)<(figure.getFigureArray()[0].length)){
+                    figure.figureX=10-figure.getFigureArray()[0].length;
                     gridCellsDelegate.step(Move.ROTATION);
                 }
-                else if ((20-figureY)<(getFigureArray().length)){
-                    figureY=20-getFigureArray().length;
+                else if ((20-figure.figureY)<(figure.getFigureArray().length)){
+                    figure.figureY=20-figure.getFigureArray().length;
                     gridCellsDelegate.step(Move.ROTATION);
                 }
                 else {
                     for (int counter=0; counter<4; counter++){
-                        if((figureX-counter)>0){
-                            figureX=figureX-counter;
+                        if((figure.figureX-counter)>0){
+                            figure.figureX=figure.figureX-counter;
                         }
                         gridCellsDelegate.step(Move.ROTATION);
-                        if (isRotationPossible){
+                        if (figure.isRotationPossible){
                             break;
                         }
                         else {
-                            if (counter!=3)isRotationPossible = true;
+                            if (counter!=3)figure.isRotationPossible = true;
                         }
-                        figureX=figureXtemp;
+                        figure.figureX=figureXtemp;
                     }
                 }
-                if (!isRotationPossible){
-                    figureX=figureXtemp;
-                    figureY=figureYtemp;
-                    rotateReverse();
+                if (!figure.isRotationPossible){
+                    figure.figureX=figureXtemp;
+                    figure.figureY=figureYtemp;
+                    figure.rotateReverse();
                     gridCellsDelegate.step(Move.ROTATION);
                 }
                 else {
-                    isReachedRightBorder = false;
+                    figure.isReachedRightBorder = false;
                 }
                 gameDelegate.repaintGrid();
             }
