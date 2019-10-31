@@ -11,6 +11,14 @@ public class Cube extends Figure {
         state1.previous = state1;
         currentState = state1;
         figureColorIndex = 1;
+        figureX = 4;
+        states.add(state1);
+    }
+    @Override
+    public void resetFigureData() {
+        super.resetFigureData();
+        currentState = states.get(0);
+        figureX = 4;
     }
 
     private static Cube ourInstance = new Cube();

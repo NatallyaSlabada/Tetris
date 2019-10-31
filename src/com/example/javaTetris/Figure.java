@@ -1,11 +1,11 @@
 package com.example.javaTetris;
 
+import java.util.ArrayList;
+
 public abstract class Figure {
     //Rectangle rectangle = new Rectangle(30,30);
-    int figureX = 3;
-    
+    int figureX;
     int figureY = 0;
-    int figureID;
     boolean isLanded = false;
     boolean isDownMovementPossible = true;
     boolean isLeftRightMovementPossible = true;
@@ -14,24 +14,10 @@ public abstract class Figure {
     boolean isReachedRightBorder = false;
     RotationState currentState;
     int figureColorIndex;
+    protected ArrayList<RotationState> states = new ArrayList<>();
 
-    public void setFigureY(int figureY){
-        this.figureY=figureY;
-    }
-    public int getFigureY (){
-        return this.figureY;
-    }
-    public void setLanded (boolean isLanded){
-        this.isLanded=isLanded;
-    }
     public boolean getLanded (){
         return this.isLanded;
-    }
-    public boolean getDownMovementPossible(){
-        return this.isDownMovementPossible;
-    }
-    public boolean getReachedBottomBorder(){
-        return this.isReachedBottomBorder;
     }
 
     public void rotate (){
@@ -43,5 +29,15 @@ public abstract class Figure {
     public int[][] getFigureArray(){
         return currentState.figureArray;
     }
+    public void resetFigureData (){
+        figureY = 0;
+        isLanded = false;
+        isDownMovementPossible = true;
+        isLeftRightMovementPossible = true;
+        isRotationPossible = true;
+        isReachedBottomBorder = false;
+        isReachedRightBorder = false;
+    }
+
 
 }

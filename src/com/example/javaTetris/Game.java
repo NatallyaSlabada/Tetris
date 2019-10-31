@@ -11,7 +11,7 @@ public class Game implements GameDelegate{
     }
     int score = 0;
     boolean isGameOver = false;
-    static public int speed;
+    public int speed;
     int accelerationSpeed=70;
     int speedBuffer;
     JFrame window;
@@ -49,11 +49,13 @@ public class Game implements GameDelegate{
 
     public void removeFilledLines (){
         for (int y=0; y<20; y++){
-            int sum = 0;
+            boolean nullInLine = false;
             for(int x: gridCells.grid[y]){
-                sum+=x;
+                if (x==0){
+                    nullInLine = true;
+                }
             }
-            if (sum==10){
+            if (!nullInLine){
                 score += 10;
                for (int line = y; line>0; line--){
                    gridCells.grid[line]= Arrays.copyOf(gridCells.grid[line-1],10);

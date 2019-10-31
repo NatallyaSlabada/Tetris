@@ -7,7 +7,8 @@ public class FigureFactory {
     private static Random random = new Random();
 
     public static Figure getNewFigure() {
-        figureID = random.nextInt(7);
+        return Cube.getCube();
+        /*figureID = random.nextInt(7);
         switch (figureID) {
             case 0:{
                 return Stick.getStick();
@@ -33,6 +34,6 @@ public class FigureFactory {
             default:{
                 return Stick.getStick();
             }
-        }
+        }*/
     }
 }

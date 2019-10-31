@@ -15,10 +15,19 @@ public class Greverse extends Figure{
         };
         state1.next = state2;
         state2.next = state1;
-        currentState = state1;
         state2.previous = state1;
         state1.previous = state2;
+        currentState = state1;
         figureColorIndex = 3;
+        figureX = 4;
+        states.add(state1);
+        states.add(state2);
+    }
+    @Override
+    public void resetFigureData() {
+        super.resetFigureData();
+        currentState = states.get(0);
+        figureX = 4;
     }
 
     private static Greverse ourInstance = new Greverse();

@@ -9,6 +9,13 @@ import java.util.Date;
 import java.util.Random;
 
 public class Tetris {
+    public static void sleep (int milis){
+        try {
+            Thread.sleep(milis);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     public static void main(String[] args) {
         Tetris tetris = new Tetris();
         tetris.startGame();
@@ -19,27 +26,24 @@ public class Tetris {
         game.setWindow();
         GridCellsDelegate gridCellsDelegate = game.gridCells;
         game.setFigureOnField();
+        game.repaintGrid();
+        sleep(500);
         while (!game.isGameOver){
-            if (gridCellsDelegate.figureGetLanded()){
+            if (game.gridCells.figure.isLanded){
                 game.setFigureOnField();
+                game.repaintGrid();
             }
             else {
                 game.updateGrid();
-                if (gridCellsDelegate.figureGetLanded()){
-                    try {
-                        Thread.sleep(300);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                if (game.gridCells.figure.isLanded){
+                    game.repaintGrid();
+
                     game.removeFilledLines();
+                    sleep(200);
                 }
                 game.repaintGrid();
             }
-            try {
-                Thread.sleep(game.getSpeed());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            sleep(game.getSpeed());
         }
 
 

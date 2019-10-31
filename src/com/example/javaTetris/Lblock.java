@@ -28,12 +28,23 @@ public class Lblock extends Figure {
         state2.next = state3;
         state3.next = state4;
         state4.next = state1;
-        currentState = state1;
         state1.previous = state4;
         state2.previous = state1;
         state3.previous = state2;
         state4.previous = state3;
+        currentState = state1;
         figureColorIndex = 4;
+        figureX = 3;
+        states.add(state1);
+        states.add(state2);
+        states.add(state3);
+        states.add(state4);
+    }
+    @Override
+    public void resetFigureData() {
+        super.resetFigureData();
+        currentState = states.get(0);
+        figureX = 3;
     }
 
     private static Lblock ourInstance = new Lblock();

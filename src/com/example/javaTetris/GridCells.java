@@ -8,17 +8,15 @@ import java.util.Date;
 
 public class GridCells extends JComponent implements GridCellsDelegate {
     public GridCells () {
-        /*for (int x=0; x<10; x++){
-            gridStable[19][x]=-2;
-        }
-        for (int y=0; y<19; y++){
-            gridStable[y][9]=-4;
-        }*/
+
     }
     //public int[][] gridMovement = new int[20][10];
     public int[][] grid = new int[20][10];
-    static Figure figure;
-
+    Figure figure;
+    @Override
+    public Figure getFigure(){
+        return this.figure;
+    }
     @Override
     public boolean figureGetLanded (){
         return figure.getLanded();
@@ -38,6 +36,7 @@ public class GridCells extends JComponent implements GridCellsDelegate {
             figure.isLanded = true;
         }
         if (figure.isReachedBottomBorder){
+            Tetris.sleep(30);
             figure.isLanded = true;
         }
         if (figure.isLanded){
@@ -60,6 +59,7 @@ public class GridCells extends JComponent implements GridCellsDelegate {
 
     public boolean setFigureOnField() {
         figure = getNewFigure();
+        figure.resetFigureData();
         int[][] currentFigure = figure.getFigureArray();
         for (int y = 0; y < currentFigure.length; y++) {
             for (int x = 0; x < currentFigure[0].length; x++) {
@@ -92,6 +92,11 @@ public class GridCells extends JComponent implements GridCellsDelegate {
         //System.out.println("Beginning of step: "+Thread.currentThread().getName()+" Time:"+ new SimpleDateFormat("ss.SSS").format(new Date()));
         for (int y = 0; y < currentFigure.length; y++) {
             for (int x = 0; x < currentFigure[0].length; x++) {
+                if((y+figure.figureY)>19){
+                    figure.isReachedBottomBorder = true;
+                    //figure.figureY=19;
+                    return;
+                }
                 if (currentFigure[y][x] == -1) {
                     if(grid[y + figure.figureY][x + figure.figureX] == 0){
                         //System.out.println(Thread.currentThread().getName()+" "+(y + figureY)+" "+(x + figureX) +" Time:"+ new SimpleDateFormat("ss.SSS").format(new Date()));
@@ -109,9 +114,6 @@ public class GridCells extends JComponent implements GridCellsDelegate {
                         }
                     }
                 }
-                if((y+figure.figureY)==19){
-                    figure.isReachedBottomBorder = true;
-                }
                 if ((x+figure.figureX)==9){
                     figure.isReachedRightBorder = true;
                 }
@@ -126,7 +128,7 @@ public class GridCells extends JComponent implements GridCellsDelegate {
         Graphics2D g2 = (Graphics2D) g;
         //int x = 10;
         //int y = 20;
-        /*for (int y = 0; y < 600;) {
+        for (int y = 0; y < 600;) {
             for (int x = 0; x < 300;) {
                 Rectangle2D rect = new Rectangle(x,y,30,30);
                 g2.setColor(Color.GRAY);
@@ -134,7 +136,7 @@ public class GridCells extends JComponent implements GridCellsDelegate {
                 x+=30;
             }
             y+=30;
-        }*/
+        }
 
         for (int y = 0; y < 600;) {
             for (int x = 0; x < 300;) {
@@ -153,7 +155,7 @@ public class GridCells extends JComponent implements GridCellsDelegate {
 
     private Color selectColor(int colorIndex){
         switch (colorIndex){
-            case 0:{
+            case 7:{
                 return Color.ORANGE;
             }
             case 1:{
@@ -166,7 +168,7 @@ public class GridCells extends JComponent implements GridCellsDelegate {
                 return Color.RED;
             }
             case 4:{
-                return Color.GRAY;
+                return Color.YELLOW;
             }
             case  5:{
                 return Color.GREEN;

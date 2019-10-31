@@ -11,4 +11,5 @@ public interface GridCellsDelegate {
 
     public boolean figureGetLanded ();
     void step(Move moveDirection);
+    public Figure getFigure();
 }

@@ -18,6 +18,7 @@ public class FigureAction extends Figure implements KeyListener {
     Figure figure;
     @Override
     public void keyPressed(KeyEvent e) {
+        figure = gridCellsDelegate.getFigure();
         int keyCode = e.getKeyCode();
         switch (keyCode) {
             case (KeyEvent.VK_RIGHT): {
@@ -29,9 +30,6 @@ public class FigureAction extends Figure implements KeyListener {
                 break;
             }
             case (KeyEvent.VK_DOWN): {
-                System.out.println(gameDelegate.getAccelerationSpeed());
-                System.out.println(Game.speed);
-
                 gameDelegate.setSpeed(gameDelegate.getAccelerationSpeed());
                 break;
             }
@@ -44,7 +42,7 @@ public class FigureAction extends Figure implements KeyListener {
         figure.isRotationPossible=true;
     }
     private void move (Move moveDirection){
-        figure = GridCells.figure;
+        figure = gridCellsDelegate.getFigure();
         int figureXtemp = figure.figureX;
         int figureYtemp = figure.figureY;
         if (moveDirection==Move.LEFT){
