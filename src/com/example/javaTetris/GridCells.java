@@ -28,7 +28,9 @@ public class GridCells extends JComponent implements GridCellsDelegate {
         //System.out.println("isReachedBottomBorder "+game.figure.isReachedBottomBorder);
         if (!figure.isReachedBottomBorder){
             figure.figureY++;
-            step(Move.DOWN);
+            if(!step(Move.DOWN)){
+                figure.figureY--;
+            }
         }
         if (!figure.isDownMovementPossible){
             figure.figureY--;
@@ -36,10 +38,10 @@ public class GridCells extends JComponent implements GridCellsDelegate {
             figure.isLanded = true;
         }
         if (figure.isReachedBottomBorder){
-            Tetris.sleep(30);
             figure.isLanded = true;
         }
         if (figure.isLanded){
+            System.out.println(figure.figureY);
             int[][] currentFigure = figure.getFigureArray();
             for (int y = 0; y < currentFigure.length; y++) {
                 for (int x = 0; x < currentFigure[0].length; x++) {
@@ -86,16 +88,15 @@ public class GridCells extends JComponent implements GridCellsDelegate {
         }
     }
 
-    public void step(Move moveDirection) {
+    public boolean step(Move moveDirection) {
         cleanPreviousFigure();
         int[][] currentFigure = figure.getFigureArray();
         //System.out.println("Beginning of step: "+Thread.currentThread().getName()+" Time:"+ new SimpleDateFormat("ss.SSS").format(new Date()));
         for (int y = 0; y < currentFigure.length; y++) {
             for (int x = 0; x < currentFigure[0].length; x++) {
-                if((y+figure.figureY)>19){
+                if((currentFigure.length+figure.figureY)>20){
                     figure.isReachedBottomBorder = true;
-                    //figure.figureY=19;
-                    return;
+                    return false;
                 }
                 if (currentFigure[y][x] == -1) {
                     if(grid[y + figure.figureY][x + figure.figureX] == 0){
@@ -120,6 +121,7 @@ public class GridCells extends JComponent implements GridCellsDelegate {
             }
         }
         //System.out.println("Ending of step: "+Thread.currentThread().getName()+" Time:"+ new SimpleDateFormat("ss.SSS").format(new Date()));
+        return true;
     }
 
     @Override

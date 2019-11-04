@@ -7,6 +7,7 @@ import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
+import java.util.Timer;
 
 public class Tetris {
     public static void sleep (int milis){
@@ -22,12 +23,13 @@ public class Tetris {
     }
 
     public void startGame (){
+        Timer timer = new Timer();
         Game game = new Game(700);
         game.setWindow();
         GridCellsDelegate gridCellsDelegate = game.gridCells;
         game.setFigureOnField();
         game.repaintGrid();
-        sleep(500);
+        sleep(300);
         while (!game.isGameOver){
             if (game.gridCells.figure.isLanded){
                 game.setFigureOnField();
@@ -37,9 +39,9 @@ public class Tetris {
                 game.updateGrid();
                 if (game.gridCells.figure.isLanded){
                     game.repaintGrid();
-
-                    game.removeFilledLines();
-                    sleep(200);
+                    timer.schedule(new MyTimer(game),300);
+                    /*game.removeFilledLines();
+                    sleep(500);*/
                 }
                 game.repaintGrid();
             }

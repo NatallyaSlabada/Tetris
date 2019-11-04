@@ -10,6 +10,6 @@ public interface GridCellsDelegate {
     public boolean figureGetReachedBottomBorder();*/
 
     public boolean figureGetLanded ();
-    void step(Move moveDirection);
+    boolean step(Move moveDirection);
     public Figure getFigure();
 }

@@ -58,8 +58,10 @@ public class FigureAction extends Figure implements KeyListener {
             }
         }
         else if (moveDirection==Move.RIGHT){
+            System.out.println("begining of right");
             if (!figure.isReachedRightBorder){
                 figure.figureX++;
+                System.out.println(figure.figureX);
                 gridCellsDelegate.step(Move.RIGHT);
                 if (!figure.isLeftRightMovementPossible){
                     figure.figureX--;
@@ -67,8 +69,10 @@ public class FigureAction extends Figure implements KeyListener {
                 }
                 gameDelegate.repaintGrid();
             }
+            System.out.println("ending of right");
         }
         else if (moveDirection==Move.ROTATION){
+            System.out.println("begining of rotation");
             if (!figure.isReachedBottomBorder){
                 figure.rotate();
                 if ((10-figure.figureX)<(figure.getFigureArray()[0].length)){
@@ -105,6 +109,7 @@ public class FigureAction extends Figure implements KeyListener {
                 }
                 gameDelegate.repaintGrid();
             }
+            System.out.println("ending of rotation");
         }
     }
 
