@@ -47,11 +47,10 @@ public class Tetris {
             }
             sleep(game.getSpeed());
         }
+        userDialog(game.window, game.score);
+    }
 
-
-
-
-
+    private void userDialog(JFrame frame, int score) {
         int userInput=-1;
         UIManager UI=new UIManager();
         UI.put("OptionPane.background", Color.GRAY);
@@ -61,8 +60,8 @@ public class Tetris {
         Object[] dialogOptions = {"Restart", "Finish"};
         while (userInput==-1){
             userInput = JOptionPane.showOptionDialog(
-                    game.window,
-                    "Your score:\n"+"    "+Integer.toString(game.score),
+                    frame,
+                    "Your score:\n"+"    "+score,
                     "GAME OVER",
                     JOptionPane.YES_NO_OPTION,
                     JOptionPane.INFORMATION_MESSAGE,
@@ -72,12 +71,12 @@ public class Tetris {
             );
             switch (userInput){
                 case 0:{
-                    game.window.dispose();
+                    frame.dispose();
                     startGame();
                     break;
                 }
                 case 1:{
-                    game.window.dispose();
+                    frame.dispose();
                     break;
                 }
             }
