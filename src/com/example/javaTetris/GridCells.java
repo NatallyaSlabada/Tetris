@@ -41,7 +41,6 @@ public class GridCells extends JComponent implements GridCellsDelegate {
             figure.isLanded = true;
         }
         if (figure.isLanded){
-            System.out.println(figure.figureY);
             int[][] currentFigure = figure.getFigureArray();
             for (int y = 0; y < currentFigure.length; y++) {
                 for (int x = 0; x < currentFigure[0].length; x++) {

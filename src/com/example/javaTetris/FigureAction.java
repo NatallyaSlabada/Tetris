@@ -42,74 +42,78 @@ public class FigureAction extends Figure implements KeyListener {
         figure.isRotationPossible=true;
     }
     private void move (Move moveDirection){
-        figure = gridCellsDelegate.getFigure();
-        int figureXtemp = figure.figureX;
-        int figureYtemp = figure.figureY;
-        if (moveDirection==Move.LEFT){
-            if (figure.figureX-1>=0){
-                figure.figureX--;
-                figure.isReachedRightBorder = false;
-                gridCellsDelegate.step(Move.LEFT);
-                if (!figure.isLeftRightMovementPossible){
-                    figure.figureX++;
-                    gridCellsDelegate.step(Move.LEFT);
-                }
-                gameDelegate.repaintGrid();
-            }
-        }
-        else if (moveDirection==Move.RIGHT){
-            System.out.println("begining of right");
-            if (!figure.isReachedRightBorder){
-                figure.figureX++;
-                System.out.println(figure.figureX);
-                gridCellsDelegate.step(Move.RIGHT);
-                if (!figure.isLeftRightMovementPossible){
+        if (figure.isDownMovementPossible){
+            figure = gridCellsDelegate.getFigure();
+            int figureXtemp = figure.figureX;
+            int figureYtemp = figure.figureY;
+            if (moveDirection==Move.LEFT){
+                if (figure.figureX-1>=0){
                     figure.figureX--;
-                    gridCellsDelegate.step(Move.RIGHT);
-                }
-                gameDelegate.repaintGrid();
-            }
-            System.out.println("ending of right");
-        }
-        else if (moveDirection==Move.ROTATION){
-            System.out.println("begining of rotation");
-            if (!figure.isReachedBottomBorder){
-                figure.rotate();
-                if ((10-figure.figureX)<(figure.getFigureArray()[0].length)){
-                    figure.figureX=10-figure.getFigureArray()[0].length;
-                    gridCellsDelegate.step(Move.ROTATION);
-                }
-                else if ((20-figure.figureY)<(figure.getFigureArray().length)){
-                    figure.figureY=20-figure.getFigureArray().length;
-                    gridCellsDelegate.step(Move.ROTATION);
-                }
-                else {
-                    for (int counter=0; counter<4; counter++){
-                        if((figure.figureX-counter)>0){
-                            figure.figureX=figure.figureX-counter;
-                        }
-                        gridCellsDelegate.step(Move.ROTATION);
-                        if (figure.isRotationPossible){
-                            break;
-                        }
-                        else {
-                            if (counter!=3)figure.isRotationPossible = true;
-                        }
-                        figure.figureX=figureXtemp;
-                    }
-                }
-                if (!figure.isRotationPossible){
-                    figure.figureX=figureXtemp;
-                    figure.figureY=figureYtemp;
-                    figure.rotateReverse();
-                    gridCellsDelegate.step(Move.ROTATION);
-                }
-                else {
                     figure.isReachedRightBorder = false;
+                    gridCellsDelegate.step(Move.LEFT);
+                    if (!figure.isLeftRightMovementPossible){
+                        figure.figureX++;
+                        gridCellsDelegate.step(Move.LEFT);
+                    }
+                    gameDelegate.repaintGrid();
                 }
-                gameDelegate.repaintGrid();
             }
-            System.out.println("ending of rotation");
+            else if (moveDirection==Move.RIGHT){
+                System.out.println("begining of right");
+                if (!figure.isReachedRightBorder){
+                    figure.figureX++;
+                    System.out.println(figure.figureX);
+                    gridCellsDelegate.step(Move.RIGHT);
+                    if (!figure.isLeftRightMovementPossible){
+                        figure.figureX--;
+                        gridCellsDelegate.step(Move.RIGHT);
+                    }
+                    gameDelegate.repaintGrid();
+                }
+                System.out.println("ending of right");
+            }
+            else if (moveDirection==Move.ROTATION){
+                System.out.println("begining of rotation");
+                if (!figure.isReachedBottomBorder){
+                    figure.rotate();
+                    if ((10-figure.figureX)<(figure.getFigureArray()[0].length)){
+                        figure.figureX=10-figure.getFigureArray()[0].length;
+                        gridCellsDelegate.step(Move.ROTATION);
+                    }
+                    else if ((20-figure.figureY)<(figure.getFigureArray().length)){
+                        figure.figureY=20-figure.getFigureArray().length;
+                        gridCellsDelegate.step(Move.ROTATION);
+                    }
+                    else {
+                        for (int counter=0; counter<4; counter++){
+                            if((figure.figureX-counter)>0){
+                                figure.figureX=figure.figureX-counter;
+                            }
+                            gridCellsDelegate.step(Move.ROTATION);
+                            if (figure.isRotationPossible){
+                                break;
+                            }
+                            else {
+                                if (counter!=3)figure.isRotationPossible = true;
+                            }
+                            figure.figureX=figureXtemp;
+                        }
+                    }
+                    if (!figure.isRotationPossible){
+                        figure.figureX=figureXtemp;
+                        figure.figureY=figureYtemp;
+                        figure.rotateReverse();
+                        gridCellsDelegate.step(Move.ROTATION);
+                    }
+                    else {
+                        if ((10-figure.figureX)>(figure.getFigureArray()[0].length)){
+                            figure.isReachedRightBorder = false;
+                        }
+                    }
+                    gameDelegate.repaintGrid();
+                }
+                System.out.println("ending of rotation");
+            }
         }
     }
 
