@@ -8,8 +8,8 @@ public class FigureFactory {
 
     public static Figure getNewFigure() {
         //return Cube.getCube();
-        return Tblock.getTblock();
-        /*figureID = random.nextInt(7);
+        //return Stick.getStick();
+        figureID = random.nextInt(7);
         switch (figureID) {
             case 0:{
                 return Stick.getStick();
@@ -35,6 +35,6 @@ public class FigureFactory {
             default:{
                 return Stick.getStick();
             }
-        }*/
+        }
     }
 }

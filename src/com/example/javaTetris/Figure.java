@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public abstract class Figure {
     //Rectangle rectangle = new Rectangle(30,30);
     int figureX;
-    int figureY = 0;
+    int figureY;
     boolean isLanded = false;
     boolean isDownMovementPossible = true;
     boolean isLeftRightMovementPossible = true;
@@ -13,8 +13,8 @@ public abstract class Figure {
     boolean isReachedBottomBorder = false;
     boolean isReachedRightBorder = false;
     RotationState currentState;
+    protected RotationState defaultState;
     int figureColorIndex;
-    protected ArrayList<RotationState> states = new ArrayList<>();
 
     public boolean getLanded (){
         return this.isLanded;

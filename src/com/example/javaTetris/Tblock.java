@@ -1,6 +1,7 @@
 package com.example.javaTetris;
 
 public class Tblock extends Figure {
+    private int defaultY;
     private Tblock() {
         RotationState state1 = new RotationState();
         RotationState state2 = new RotationState();
@@ -10,6 +11,7 @@ public class Tblock extends Figure {
                 new int[]{0, -1, 0},
                 new int[]{-1, -1, -1}
         };
+        defaultY = state1.figureArray.length-1;
         state2.figureArray = new int[][] {
                 new int[]{-1, 0},
                 new int[]{-1, -1},
@@ -35,16 +37,15 @@ public class Tblock extends Figure {
         currentState = state1;
         figureColorIndex = 6;
         figureX = 3;
-        states.add(state1);
-        states.add(state2);
-        states.add(state3);
-        states.add(state4);
+        figureY = defaultY;
+        defaultState = state1;
     }
     @Override
     public void resetFigureData() {
         super.resetFigureData();
-        currentState = states.get(0);
+        currentState = defaultState;
         figureX = 3;
+        figureY = defaultY;
     }
 
     private static Tblock ourInstance = new Tblock();

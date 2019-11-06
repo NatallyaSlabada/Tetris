@@ -3,12 +3,14 @@ package com.example.javaTetris;
 import java.util.ArrayList;
 
 public class Stick extends Figure{
+    private int defaultY;
     private Stick() {
         RotationState state1 = new RotationState();
         RotationState state2 = new RotationState();
         state1.figureArray = new int[][] {
                 new int[]{-1,-1,-1,-1}
         };
+        defaultY = state1.figureArray.length-1;
         state2.figureArray = new int[][] {
                 new int[]{-1},
                 new int[]{-1},
@@ -22,15 +24,16 @@ public class Stick extends Figure{
         currentState = state1;
         figureColorIndex = 7;
         figureX = 3;
-        states.add(state1);
-        states.add(state2);
+        figureY = defaultY;
+        defaultState = state1;
     }
 
     @Override
     public void resetFigureData() {
         super.resetFigureData();
-        currentState = states.get(0);
+        currentState = defaultState;
         figureX = 3;
+        figureY = defaultY;
     }
 
     private static Stick ourInstance = new Stick();

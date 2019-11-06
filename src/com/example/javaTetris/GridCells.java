@@ -17,11 +17,6 @@ public class GridCells extends JComponent implements GridCellsDelegate {
     public Figure getFigure(){
         return this.figure;
     }
-    @Override
-    public boolean figureGetLanded (){
-        return figure.getLanded();
-    }
-
 
     public void updateGrid(){
         //System.out.println("Ending step in Tetris: "+Thread.currentThread().getName()+" Time:"+ new SimpleDateFormat("ss.SSS").format(new Date()));
@@ -42,17 +37,15 @@ public class GridCells extends JComponent implements GridCellsDelegate {
         }
         if (figure.isLanded){
             int[][] currentFigure = figure.getFigureArray();
-            for (int y = 0; y < currentFigure.length; y++) {
+            for (int y = currentFigure.length-1; y >= 0; y--) {
                 for (int x = 0; x < currentFigure[0].length; x++) {
                     if (currentFigure[y][x] == -1) {
-                        grid[y + figure.figureY][x + figure.figureX] = figure.figureColorIndex;
+                        grid[figure.figureY+y-(currentFigure.length-1)][x + figure.figureX] = figure.figureColorIndex;
                     }
                 }
             }
         }
     }
-
-
 
     public static Figure getNewFigure(){
         return FigureFactory.getNewFigure();
@@ -62,11 +55,11 @@ public class GridCells extends JComponent implements GridCellsDelegate {
         figure = getNewFigure();
         figure.resetFigureData();
         int[][] currentFigure = figure.getFigureArray();
-        for (int y = 0; y < currentFigure.length; y++) {
+        for (int y = currentFigure.length-1; y >= 0; y--) {
             for (int x = 0; x < currentFigure[0].length; x++) {
                 if (currentFigure[y][x] == -1) {
-                    if(grid[y + figure.figureY][x + figure.figureX] == 0){
-                        grid[y + figure.figureY][x + figure.figureX] = -1;
+                    if(grid[figure.figureY+y-(currentFigure.length-1)][x + figure.figureX] == 0){
+                        grid[figure.figureY+y-(currentFigure.length-1)][x + figure.figureX] = -1;
                     }
                     else {
                         return false;
@@ -91,16 +84,16 @@ public class GridCells extends JComponent implements GridCellsDelegate {
         cleanPreviousFigure();
         int[][] currentFigure = figure.getFigureArray();
         //System.out.println("Beginning of step: "+Thread.currentThread().getName()+" Time:"+ new SimpleDateFormat("ss.SSS").format(new Date()));
-        for (int y = 0; y < currentFigure.length; y++) {
+        for (int y = currentFigure.length-1; y >= 0; y--) {
             for (int x = 0; x < currentFigure[0].length; x++) {
-                if((currentFigure.length+figure.figureY)>20){
+                if(figure.figureY>19){
                     figure.isReachedBottomBorder = true;
                     return false;
                 }
                 if (currentFigure[y][x] == -1) {
-                    if(grid[y + figure.figureY][x + figure.figureX] == 0){
+                    if(grid[figure.figureY+y-(currentFigure.length-1)][x + figure.figureX] == 0){
                         //System.out.println(Thread.currentThread().getName()+" "+(y + figureY)+" "+(x + figureX) +" Time:"+ new SimpleDateFormat("ss.SSS").format(new Date()));
-                        grid[y + figure.figureY][x + figure.figureX] = -1;
+                        grid[figure.figureY+y-(currentFigure.length-1)][x + figure.figureX] = -1;
                     }
                     else {
                         if (moveDirection==Move.DOWN){
@@ -125,11 +118,8 @@ public class GridCells extends JComponent implements GridCellsDelegate {
 
     @Override
     public void paintComponent(Graphics g) {
-
         Graphics2D g2 = (Graphics2D) g;
-        //int x = 10;
-        //int y = 20;
-        for (int y = 0; y < 600;) {
+        /*for (int y = 0; y < 600;) {
             for (int x = 0; x < 300;) {
                 Rectangle2D rect = new Rectangle(x,y,30,30);
                 g2.setColor(Color.GRAY);
@@ -137,7 +127,7 @@ public class GridCells extends JComponent implements GridCellsDelegate {
                 x+=30;
             }
             y+=30;
-        }
+        }*/
 
         for (int y = 0; y < 600;) {
             for (int x = 0; x < 300;) {
@@ -186,29 +176,4 @@ public class GridCells extends JComponent implements GridCellsDelegate {
         }
     }
 }
-
-
-
-    /*@Override
-    public void setFigureY(int figureY){
-        figure.setFigureY(figureY);
-    }
-    @Override
-    public int getFigureY (){
-        return figure.getFigureY();
-    }
-    @Override
-    public void figureSetLanded (boolean isLanded){
-        figure.setLanded(isLanded);
-    }
-
-    @Override
-    public boolean figureGetDownMovementPossible(){
-        return figure.isDownMovementPossible;
-    }
-    @Override
-    public boolean figureGetReachedBottomBorder(){
-        return figure.isReachedBottomBorder;
-    }
-*/
 

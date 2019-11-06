@@ -1,6 +1,7 @@
 package com.example.javaTetris;
 
 public class Lreverse extends Figure {
+    private int defaultY;
     private Lreverse() {
         RotationState state1 = new RotationState();
         RotationState state2 = new RotationState();
@@ -10,6 +11,7 @@ public class Lreverse extends Figure {
                 new int[]{-1, 0, 0},
                 new int[]{-1, -1, -1}
         };
+        defaultY = state1.figureArray.length-1;
         state2.figureArray = new int[][] {
                 new int[]{-1, -1},
                 new int[]{-1, 0},
@@ -35,16 +37,15 @@ public class Lreverse extends Figure {
         currentState = state1;
         figureColorIndex = 5;
         figureX = 4;
-        states.add(state1);
-        states.add(state2);
-        states.add(state3);
-        states.add(state4);
+        figureY = defaultY;
+        defaultState = state1;
     }
     @Override
     public void resetFigureData() {
         super.resetFigureData();
-        currentState = states.get(0);
+        currentState = defaultState;
         figureX = 4;
+        figureY = defaultY;
     }
 
     private static Lreverse ourInstance = new Lreverse();

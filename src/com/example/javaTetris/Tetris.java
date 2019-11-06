@@ -1,12 +1,7 @@
 package com.example.javaTetris;
 
-import javafx.event.EventDispatcher;
-
 import javax.swing.*;
 import java.awt.*;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Random;
 import java.util.Timer;
 
 public class Tetris {
@@ -39,9 +34,7 @@ public class Tetris {
                 game.updateGrid();
                 if (game.gridCells.figure.isLanded){
                     game.repaintGrid();
-                    timer.schedule(new MyTimer(game),300);
-                    /*game.removeFilledLines();
-                    sleep(500);*/
+                    timer.schedule(new GameTimer(game),300);
                 }
                 game.repaintGrid();
             }
