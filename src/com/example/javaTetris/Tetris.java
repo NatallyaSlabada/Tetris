@@ -34,7 +34,7 @@ public class Tetris {
                 game.updateGrid();
                 if (game.gridCells.figure.isLanded){
                     game.repaintGrid();
-                    timer.schedule(new GameTimer(game),300);
+                    timer.schedule(new GameTimer(game),100);
                 }
                 game.repaintGrid();
             }

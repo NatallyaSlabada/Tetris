@@ -37,6 +37,10 @@ public class FigureAction extends Figure implements KeyListener {
                 move(Move.ROTATION);
                 break;
             }
+            case (KeyEvent.VK_SPACE): {
+                move(Move.DOWN);
+                break;
+            }
         }
         figure.isLeftRightMovementPossible=true;
         figure.isRotationPossible=true;
@@ -46,7 +50,13 @@ public class FigureAction extends Figure implements KeyListener {
             figure = gridCellsDelegate.getFigure();
             int figureXtemp = figure.figureX;
             int figureYtemp = figure.figureY;
-            if (moveDirection==Move.LEFT){
+            if (moveDirection==Move.DOWN){
+                 while (!(figure.isReachedBottomBorder || !figure.isDownMovementPossible)){
+                     figure.figureY++;
+                     gridCellsDelegate.step(Move.DOWN);
+                 }
+            }
+            else if (moveDirection==Move.LEFT){
                 if (figure.figureX-1>=0){
                     figure.figureX--;
                     figure.isReachedRightBorder = false;
