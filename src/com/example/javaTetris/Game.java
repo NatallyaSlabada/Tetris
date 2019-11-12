@@ -61,7 +61,7 @@ public class Game implements GameDelegate{
                    gridCells.grid[line]= Arrays.copyOf(gridCells.grid[line-1],10);
                }
                 gridCells.grid[0] = new int[]{0,0,0,0,0,0,0,0,0,0};
-                if (speed>20){
+                if (speed>150){
                     speed = speedBuffer -= 10;
                 }
             }
